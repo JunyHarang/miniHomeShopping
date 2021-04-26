@@ -1,0 +1,115 @@
+-- 원글 : 최초로 작성한 글( orderno : 0, depth : 0 번인 글)
+-- groupno : 원글에 대한 그룹 번호로써, 동일한 원글에 대해서는 같은 그룹 번호를 가진다.
+-- orderno : 순서 번호로써, 가장 최근에 작성한 글은 낮은 순서 번호를 가진다.
+-- depth : 글의 깊이로써, 예를 들어 2리플(리플 글에 대한 리플 글)은 depth = 2 이다.
+
+--------------------------------------------------------------------------------------------------------
+-- num(기본 키) 컬럼이 0이면 새글이다
+-- 0이 아니면 원글의 num이 넘어 온거다
+--------------------------------------------------------------------------------------------------------
+-- 새글 작성시 : 최초 게시물(원글)을 작성하는 경우
+-- 다음의 값으로 인서트한다.
+-- groupno는 num 컬럼과 동일하게 작성하면 된다.
+-- num : 시퀀스.nextval, groupno : 시퀀스.currval, orderno = 0, depth = 0 
+--------------------------------------------------------------------------------------------------------
+-- 댓글 작성시
+-- 다음 문장으로 업데이트를 수행한다.
+-- update sample set orderno = orderno + 1 where groupno = 부모의groupno and orderno > 부모의orderno ; 
+-- 다음의 값으로 인서트한다.
+-- num : 시퀀스.nextval, groupno : 부모의groupno사용, orderno은 1증가, depth는 1증가 시켜서 인서트한다.
+--------------------------------------------------------------------------------------------------------
+drop table sample purge;	
+drop sequence seqsam ;
+
+create sequence seqsam ;
+create table sample(
+	num number primary key,
+	name varchar2(20) not null,
+	groupno number default 0,
+	orderno number default 0,
+	depth number default 0
+);
+
+-- 원글 작성하기
+-- groupno 번호는 시퀀스 번호와 동일하게 설정한다.
+-- currval은 현재 뽑힌 시퀀스 번호를 의미한다.
+insert into sample values(seqsam.nextval, '김유신', seqsam.currval, 0, 0 ) ;
+insert into sample values(seqsam.nextval, '이순신', seqsam.currval, 0, 0 ) ;
+
+-- 김유신에 대한 댓글 달기( groupno = 1, orderno = 0, depth = 0  )
+update sample set orderno = orderno + 1 where groupno = 1 and orderno > 0 ; 
+-- 0 행이 갱신되었습니다.
+insert into sample values(seqsam.nextval, '최영', 1, 1, 1 ) ;
+
+-- 김유신에 대한 댓글 달기( groupno = 1, orderno = 0, depth = 0  )
+update sample set orderno = orderno + 1 where groupno = 1 and orderno > 0 ; 
+-- 1 행이 갱신되었습니다.
+
+insert into sample values(seqsam.nextval, '강감찬', 1, 1, 1 ) ;
+
+-- 김유신에 대한 댓글 달기( groupno = 1, orderno = 0, depth = 0 )
+update sample set orderno = orderno + 1 where groupno = 1 and orderno > 0 ; 
+-- 2 행이 갱신되었습니다.
+
+insert into sample values(seqsam.nextval, '윤봉길', 1, 1, 1 ) ;
+
+-- 강감찬에 대한 댓글 달기( groupno = 1, orderno = 2, depth = 1  )
+update sample set orderno = orderno + 1 where groupno = 1 and orderno > 2 ; 
+-- 1 행이 갱신되었습니다.
+insert into sample values(seqsam.nextval, '김구', 1, 3, 2 ) ;
+
+-- 강감찬에 대한 댓글 달기( groupno = 1, orderno = 2, depth = 1  )
+update sample set orderno = orderno + 1 where groupno = 1 and orderno > 2 ; 
+-- 2 행이 갱신되었습니다.
+insert into sample values(seqsam.nextval, '김좌진', 1, 3, 2 ) ;
+
+-- 이순신에 대한 댓글 달기( groupno = 2, orderno = 0, depth = 0  )
+update sample set orderno = orderno + 1 where groupno = 2 and orderno > 0 ; 
+-- 0 행이 갱신되었습니다.
+insert into sample values(seqsam.nextval, '안중근', 2, 1, 1 ) ;
+
+-- 이순신에 대한 댓글 달기( groupno = 2, orderno = 0, depth = 0  )
+update sample set orderno = orderno + 1 where groupno = 2 and orderno > 0 ; 
+-- 1 행이 갱신되었습니다.
+insert into sample values(seqsam.nextval, '논개', 2, 1, 1 ) ;
+
+
+commit ;
+
+-- 데이터를 조회하는 문장
+select * from sample
+order by groupno desc, orderno asc, depth asc ;
+
+
+NUM NAME            GROUPNO    ORDERNO      DEPTH
+---------- ------------ ---------- ---------- ----------
+2 이순신                2          0          0
+9 논개                2          1          1
+8 안중근                2          2          1
+1 김유신                1          0          0
+5 윤봉길                1          1          1
+4 강감찬                1          2          1
+7 김좌진              1          3          2
+6 김구              1          4          2
+3 최영                1          5          1
+
+
+9 개의 행이 선택되었습니다.
+
+
+
+미션
+원글 '선덕여왕'이 게시물을 작성합니다.
+여기에 '명성왕후'와 '덕혜옹주'가 답글을 작성합니다.
+이것을 sql문으로 작성하시고, 데이터 검증을 수행하세요.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+오라클 계층형 게시판1
+http://blog.naver.com/genezerg/20127218308
+
+오라클 계층형 게시판2 
+http://blog.naver.com/dasomiy?Redirect=Log&logNo=60193969125
