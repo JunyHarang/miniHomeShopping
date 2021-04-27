@@ -12,13 +12,17 @@
 <head>
 	<script>	
 		function search(){
-			alert('검색');
+			var mode = $('#mode').val();
+			var keyword = $('#keyword').val();
+//			alert(mode + '/' + keyword);
+			
+			location.href='<%=NoForm%>boList&mode=' + mode + '&keyword=' + keyword ;
 		}
 		function searchAll(){
-			alert('전체 검색');
+			location.href='<%=NoForm%>boList';
 		}
 		function writeForm(){
-			alert('글 작성');
+			location.href='<%=NoForm%>boInsert';
 		}
 		
 		$(document).ready(function(){
@@ -63,11 +67,13 @@
 										<input type="text" class="form-control" name="keyword" id="keyword"> 
 									</div>									
 									&nbsp;&nbsp;
-									<button class="btn btn-default" type="submit" onclick="search();">검색</button>
+									<button class="btn btn-default" type="button" onclick="search();">검색</button>
 									&nbsp;&nbsp;
 									<button class="btn btn-default" type="button" onclick="searchAll();">전체 검색</button>
 									&nbsp;&nbsp;
-									<button class="btn btn-default" type="button" onclick="writeForm();">글쓰기</button>								
+									<button class="btn btn-default" type="button" onclick="writeForm();">글쓰기</button>
+								   &nbsp;&nbsp;
+								   ${pageInfo.pagingStatus}							
 								</form>
 							</td>
 						</tr>	
@@ -91,6 +97,11 @@
 					</tbody>
 				</table>
 			</div>
+			
+			<div align="center">
+				<footer>${pageInfo.pagingHtml}</footer>
+			</div>
+			
 		</div>
 	</div>
 </body>
