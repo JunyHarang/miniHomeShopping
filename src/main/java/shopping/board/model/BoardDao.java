@@ -182,15 +182,20 @@ public class BoardDao extends SuperDao {
 				
 				lists.add(bean);
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			
 		} finally{
+			
 			try {
 				if( rs != null ){ rs.close(); }
 				if( pstmt != null ){ pstmt.close(); }
 				super.closeConnection(); 
+				
 			} catch (Exception e2) {
 				e2.printStackTrace(); 
+				
 			}
 		}
 		
