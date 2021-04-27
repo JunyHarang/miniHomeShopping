@@ -23,6 +23,16 @@ public class BoardListController extends SuperClass {
 		String mode = request.getParameter("mode");
 		String keyword = request.getParameter("keyword");
 		
+		// mode와 keyword에 대한 null 값 유효성 검사
+		
+		if (mode == null || mode.equals("null") || mode.equals("")) {
+			mode = "all";
+		}
+		
+		if (keyword == null || keyword.equals("null") || keyword.equals("") || keyword.equals("all")) {
+			keyword = "";
+		}
+		
 		String url = super.CommandName + "boList";
 		
 		BoardDao dao = new BoardDao();
@@ -33,7 +43,7 @@ public class BoardListController extends SuperClass {
 		
 		Paging pageInfo = new Paging(pageNumber, totalCount, url, mode, keyword);
 		
-		List<Board> lists = dao.SelectDataList(pageInfo.getBeginRow(), pageInfo.getEndRow(), mode,keyword );
+		List<Board> lists = dao.SelectDataList(pageInfo.getBeginRow(), pageInfo.getEndRow(), mode, keyword );
 		
 //		String data = dao.toString() ;
 		

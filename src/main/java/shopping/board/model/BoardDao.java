@@ -155,8 +155,8 @@ public class BoardDao extends SuperDao {
 		PreparedStatement pstmt = null ;
 		ResultSet rs = null ;
 		
-		 String sql = " select no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark ";
-		 		  		 sql += " from ( select ranking, no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark, rank() over (oder by no desc) as ranking from boards ";
+		 String sql = " select ranking, no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark ";
+		 		  		 sql += " from ( select no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark, rank() over(order by no desc) as ranking from boards ";
 		 				 
 		 if (mode.equalsIgnoreCase("all") == false) {
 		 		 System.out.println("Not all Search Mode");

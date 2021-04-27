@@ -231,7 +231,7 @@ commit;
 ### topN 구문
 #### 게시판 페이징 처리를 위해 실습 하겠습니다.
 ~~~
-select no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark
+select ranking, no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark
 from ( select ranking, no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark, rank() over (oder by no desc) as ranking from boards )
 where ranking between 1 and 10;
 ~~~
