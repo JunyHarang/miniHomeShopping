@@ -1,7 +1,5 @@
 package shopping.utility;
 
-import java.util.Iterator;
-
 public class Paging {
 	private int totalCount = 0;					//	총 행(레코드)수
 	private int totalPage = 0;						// 전체 페이지 수
@@ -47,7 +45,6 @@ public class Paging {
 		this.pagingHtml = this.getPagingHtml(url);
 		this.pagingStatus = "총" + totalCount + "건[" + pageNumber + "/" + totalPage + "]";
 		
-		
 		this.Display();
 	} // pageTest Method 끝
 
@@ -56,27 +53,44 @@ public class Paging {
 		
 		String result = "";
 		
+		// 필드 검색을 위한 변수 선언
+		String field_search = "&mode=" +  this.mode + "&keyword=" + this.keyword;
+		
+		// href_attr은 <a>의 href에 들어갈 값
+		String href_attr = url + "&pageNumber=" + 100 + field_search ;
+		
+		result += "<ul class = \"pagination\">";
+		
 		// part 맨 처음, 이전
 		if (pageNumber <= pageCount) {
 			System.out.println("이전 페이지가 없습니다.");
-		} else {
 			
+		} else {
+			result += "<li><a href=\"" + url + "&pageNumber=" + 1 + field_search + "\">" + "맨 앞" + "</a></li>";
+			result += "<li><a href=\"" + url + "&pageNumber=" + (beginPage - 1) + field_search + "\">" + "이전" + "</a></li>";
 		}
+		
 		// part 중간(beginPage ~ endPage 까지)
 		for (int i = beginPage; i <= endPage; i++) {
 			if (i == pageNumber) {	// i가 현재 페이지이면
+				result += "<li class=\"active\"><a><font color='green'><b>" + i + "</b></font></a></li>";
 				
 			} else {
+				result += "<li><a href=\"" + url + "&pageNumber=" + i + field_search + "\">" + i + "</a></li>";
 				
 			}			
 		}
+		
 		// part 다음, 끝
 		if (pageNumber >= (totalPage / pageCount * pageCount + 1)) {
 			System.out.println("다음 페이지가 없습니다.");		
+			
 		} else {
-					
+			result += "<li><a href=\"" + url + "&pageNumber=" + (endPage + 1) + field_search + "\">" + "다음" + "</a></li>";
+			result += "<li><a href=\"" + url + "&pageNumber=" + totalPage + field_search + "\">" + "끝" + "</a></li>";
 		}
 		
+		result += "</ul>";
 		return result;
 		
 	} // getPagingHtml Method 끝

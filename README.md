@@ -137,12 +137,16 @@ CompositeDao Class SelectDataZipcode() Method
 
 zipCheck 70 ~ 75 Line :
 
+~~~
+
 <c:set var="address" value="${fn:trim(oneitem.si_nm)} 
 																${fn:trim(oneitem.sgg_nm)} 
 																${fn:trim(oneitem.rd_nm)} 
 																${fn:trim(oneitem.bd_ma_sn)} 
 																(${fn:trim(oneitem.emd_nm)} 
 																${fn:trim(oneitem.search_word)})" />
+
+~~~
 
 fn은 function의 약자이고, trim은 공백을 없애기 위해 사용하는 메서드이다.
 
@@ -210,22 +214,27 @@ keyword: 검색할 Keyword<br><br>
 
 ### 게시판 Table에 대한 pl-sql For문
 #### (연습을 위해 게시판에 30개의 동일한 게시물을 올리기 위해 pl-spl문 사용)
+~~~ 
 begin
-for i in 1..30 loop
-insert into boards 
-values(myboard.nextval, '열공합시다', 'kang', '1234', '멍멍멍', default, default, default, default, default, default);
+	for i in 1..30 loop
+	insert into boards 
+	values(myboard.nextval, '열공합시다', 'kang', '1234', '멍멍멍', default, default,  
+	default, default, default, default);
 end loop;
 
 end;
 /
 
 commit;
+~~~
 
 ### topN 구문
 #### 게시판 페이징 처리를 위해 실습 하겠습니다.
+~~~
 select no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark
 from ( select ranking, no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark, rank() over (oder by no desc) as ranking from boards )
 where ranking between 1 and 10;
+~~~
 
 ## paing Class 작성
 shopping.utility 패키지에서 작성
