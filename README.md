@@ -1,6 +1,7 @@
-# 주니하랑의 첫 웹 페이지 구성기
+# 주니하랑의 미니 홈쇼핑 제작
 
-### 본 내용은 설진욱(ugcadman@naver.com)강사의 강의를 토대로 작업 중 입니다.
+### 본 내용은 설진욱(ugcadman@naver.com)강사(님)의 강의를 토대로 작업 중 입니다.
+본 내용에 대한 저작권 등에 대한 문의는 위의 강사(님)에게 부탁 드립니다.
 
 2021년 04월 22일 작업  내용
 
@@ -33,13 +34,13 @@ NoForm : 폼이 없을 때 사용할 공용 변수
 
 -- 계시판 필요 기능 --
 
-													비회원					일반회원					관리자
+									     비회원	      				               일반회원					            관리자
 
-===============================================================================
+============================================================================================================
 
-계시물 등록									X								O							 O
-계시물 수정									X								O							 O
-계시물 삭제									X								O							 O
+계시물 등록                              X                          O                        O
+계시물 수정								X								O							 O
+계시물 삭제								X								O							 O
 계시물 목록 보기							O								O							 O
 계시물 상세 보기							X								O							 O
 계시물 댓글 달기							X								O							 O
@@ -158,4 +159,48 @@ MemberInsertController의 doGet()에 작업
 
 MemberDao Class의 GetManagerList() 만들기
 meInsertForm.jsp에서 콤보 박스 채워 넣기
+
+
+### 2021년 04월 27일 작업 내용
+
+1. 게시물 목록 보기
+2. 페이지 당 10개씩 목록 출력되게 만들기
+3. 페이징 처리 가능하게 만들기
+4. 필드 검색이 가능하게 만들기
+5. 하이퍼 링크 이용 수정, 삭제 답글 페이지 이동 가능하게 만들기
+
+### 관련 Command : boList
+
+### 관련 Dao : BoardDao
+	- SelectDataList(int beginRow, int endRow, String mode, String keyword)
+	  	beginRow: 해당 페이지의 시작 랭킹 숫자
+		endRow: 해당 페이지의 끝 랭킹 숫자
+		mode: 필드 검색 컬럼(Table에 실제 존재하는 컬럼 이름으로 정해야 한다.)
+		keyword: 검색 키워드
+
+### 관련 Controller : BoardListController
+
+### 관련 JSP : boList.jsp
 		
+### 게시물 데이터 30개 추가를 위해 topN 구문 만들기
+#### paging.java Class 구현하기
+	- Paging Class는 페이징 처리를 도와주는 Utility Class입니다.
+
+### 게시판 Table에 대한 pl-sql For문
+#### (연습을 위해 게시판에 30개의 동일한 게시물을 올리기 위해 pl-spl문 사용)
+begin
+for i in 1..30 loop
+insert into boards 
+values(myboard.nextval, '열공합시다', 'kang', '1234', '멍멍멍', default, default, default, default, default, default);
+end loop;
+
+end;
+/
+
+commit;
+
+### topN 구문
+#### 게시판 페이징 처리를 위해 실습 하겠습니다.
+select no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark
+from ( select ranking, no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark, rank() over (oder by no desc) as ranking from boards )
+where ranking between 1 and 10;
