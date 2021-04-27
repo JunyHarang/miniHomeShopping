@@ -163,11 +163,33 @@ meInsertForm.jsp에서 콤보 박스 채워 넣기
 
 ### 2021년 04월 27일 작업 내용
 
-1. 게시물 목록 보기
-2. 페이지 당 10개씩 목록 출력되게 만들기
-3. 페이징 처리 가능하게 만들기
-4. 필드 검색이 가능하게 만들기
-5. 하이퍼 링크 이용 수정, 삭제 답글 페이지 이동 가능하게 만들기
+** 1. 게시물 목록 보기 **
+** 2. 페이지 당 10개씩 목록 출력되게 만들기 **
+** 3. 페이징 처리 가능하게 만들기 **
+** 4. 필드 검색이 가능하게 만들기 **
+** 5. 하이퍼 링크 이용 수정, 삭제 답글 페이지 이동 가능하게 만들기 **
+
+##### 게시판 관련 사용 변수
+---<br>
+
+<p align="center"><img src="./src/main/webapp/common/ref_images/페이징_관련_변수_목록.png", width="700" height="500"></p>
+
+totalCount: 총 행(레코드) 건수<br>
+totalPage: 전체 페이지 수<br>
+pageNumber: 현재 페이지 번호<br>
+pageSize: 한 페이지에 보여줄 행(레코드) 수<br>
+url: Command 이름(boList)입력<br>
+beginRow: 게시판 맨 위에 오는 행(내용)<br>
+endRow: 게시판 맨 밑에 오는 행(내용)<br>
+pageCount: 게시판 목록을 넘기기 위해 사용<br>
+beginPage: 게시판 목록을 넘기기 위해 사용하는 것 중 맨 앞<br>
+endPage: 게시판 목록을 넘기기 위해 사용하는 것 중 맨 뒤<br>
+pagingHtml: 게시판 목록 넘기기 위해 사용하는 버튼(?)<br>
+pagingStatus: 검색 결과 건수 표현<br>
+	- "총" + totalCount + "건[" + pageNumber + "/" + totalPage + "]" 
+mode: 필드 검색 관련<br>
+keyword: 검색할 Keyword<br><br>
+---
 
 ### 관련 Command : boList
 
@@ -204,3 +226,13 @@ commit;
 select no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark
 from ( select ranking, no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark, rank() over (oder by no desc) as ranking from boards )
 where ranking between 1 and 10;
+
+## paing Class 작성
+shopping.utility 패키지에서 작성
+
+기존 Paging Class Backup 이 후 작업
+
+pageTest.java: Paging Test를 위한 Java Class
+paging.java: Paging Class
+
+
