@@ -17,8 +17,7 @@ public class Paging {
 	
 	private String mode = "";						// 검색 모드(전체 검색은 all)
 	private String keyword = "";				// 검색 키워드
-	
-	
+
 	public Paging(String param_pageNumber, int totalCount, String url, String mode, String keyword) {
 		if (param_pageNumber == null || param_pageNumber.equals("null") || param_pageNumber.equals("")) {
 			param_pageNumber = "1";
@@ -46,9 +45,113 @@ public class Paging {
 		this.pagingStatus = "총" + totalCount + "건[" + pageNumber + "/" + totalPage + "]";
 		
 		this.Display();
-	} // pageTest Method 끝
+	} // paging 생성자 Method 끝
+	
+	
+	public int getPageNumber() {
+		return pageNumber;
+	}
 
 
+	public void setPageNumber(int pageNumber) {
+		this.pageNumber = pageNumber;
+	}
+
+
+	public int getBeginRow() {
+		return beginRow;
+	}
+
+
+	public void setBeginRow(int beginRow) {
+		this.beginRow = beginRow;
+	}
+
+
+	public int getEndRow() {
+		return endRow;
+	}
+
+
+	public void setEndRow(int endRow) {
+		this.endRow = endRow;
+	}
+
+
+	public String getPagingHtml() {
+		return pagingHtml;
+	}
+
+
+	public void setPagingHtml(String pagingHtml) {
+		this.pagingHtml = pagingHtml;
+	}
+
+
+	public String getPagingStatus() {
+		return pagingStatus;
+	}
+
+
+	public void setPagingStatus(String pagingStatus) {
+		this.pagingStatus = pagingStatus;
+	}
+
+
+	public String getMode() {
+		return mode;
+	}
+
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+
+	public int getTotalCount() {
+		return totalCount;
+	}
+
+
+	public int getTotalPage() {
+		return totalPage;
+	}
+
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+
+	public int getPageCount() {
+		return pageCount;
+	}
+
+
+	public int getBeginPage() {
+		return beginPage;
+	}
+
+
+	public int getEndPage() {
+		return endPage;
+	}
+
+
+	public String getUrl() {
+		return url;
+	}
+	
 	private String getPagingHtml(String url) {
 		
 		String result = "";

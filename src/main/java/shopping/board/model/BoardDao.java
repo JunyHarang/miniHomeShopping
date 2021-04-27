@@ -155,13 +155,29 @@ public class BoardDao extends SuperDao {
 		PreparedStatement pstmt = null ;
 		ResultSet rs = null ;
 		
-		String sql = " select * from boards " ;
-		sql += " order by no asc " ;
+		 String sql = " select no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark ";
+		 		  		 sql += " from ( select ranking, no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark, rank() over (oder by no desc) as ranking from boards ";
+		 				 
+		 if (mode.equalsIgnoreCase("all") == false) {
+		 		 System.out.println("Not all Search Mode");
+		 		 sql += " where " + mode + " like '%" + keyword + "%' " ;
+		 }
+		 		  		 
+		 		  		sql += " ) ";
+		 		  		sql += " where ranking between ? and ? ";
+		 				 
+		 
 		
 		List<Board> lists = new ArrayList<Board>();
+		
 		try {
+			
 			if( conn == null ){ super.conn = super.getConnection() ; }
-			pstmt = super.conn.prepareStatement(sql) ;			
+			pstmt = super.conn.prepareStatement(sql) ;	
+			
+			pstmt.setInt(1, beginRow);
+			pstmt.setInt(2, endRow);
+			
 			rs = pstmt.executeQuery() ;			
 			
 			while( rs.next() ){
@@ -233,7 +249,8 @@ public class BoardDao extends SuperDao {
 			}
 		} 		
 		return bean  ;
-	}
+		
+	} // SelectDataList 끝
 	
 	public List<Board> SelectDataList() {
 		
@@ -346,17 +363,29 @@ public class BoardDao extends SuperDao {
 		PreparedStatement pstmt = null ;
 		ResultSet rs = null ;				
 
-		String sql = " " ;
-		sql += " " ;
+		String sql = " select count(*) as cnt from boards " ;
+		
+		if (mode.equalsIgnoreCase("all") == false) {
+			System.out.println("Not all search Mode ");
+			sql += " where " + mode + " like '%" + keyword + "%' "  ;
+		}
+		
 		sql += " " ;
 		
 		int cnt = 0 ; 
+		
 		try {
-			if( this.conn == null ){ this.conn = this.getConnection() ; }			
+			
+			if( this.conn == null ) { 
+				this.conn = this.getConnection() ; 
+			}			
+			
 			pstmt = this.conn.prepareStatement(sql) ;			 
 			rs = pstmt.executeQuery() ; 
 			
-			
+			if (rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
 			
 		} catch (SQLException e) {			
 			e.printStackTrace();

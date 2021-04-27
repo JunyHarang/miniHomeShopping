@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class SuperClass implements SuperController, Validator {
-	public final String CommandName = "/Shopping/";
+	public final String CommandName = "/shopping/";
 	public final String PREFIX = "err"; 
 	private HttpServletRequest request = null;
 	private HttpServletResponse response = null ;

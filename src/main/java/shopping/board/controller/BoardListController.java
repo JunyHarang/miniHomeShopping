@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import shopping.board.model.Board;
 import shopping.board.model.BoardDao;
 import shopping.common.controller.SuperClass;
+import shopping.utility.Paging;
 
 public class BoardListController extends SuperClass {
 	
@@ -18,14 +19,27 @@ public class BoardListController extends SuperClass {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doGet(request, response);
 		
-		Board bean = null ;
+		String pageNumber = request.getParameter("pageNumber");
+		String mode = request.getParameter("mode");
+		String keyword = request.getParameter("keyword");
+		
+		String url = super.CommandName + "boList";
+		
 		BoardDao dao = new BoardDao();
+		
+		int totalCount = dao.SelectTotalCount(mode, keyword);		// 행(row) 총 개수 담을 변수
+		
+		System.out.println("total data size : " + totalCount);
+		
+		Paging pageInfo = new Paging(pageNumber, totalCount, url, mode, keyword);
+		
+		List<Board> lists = dao.SelectDataList(pageInfo.getBeginRow(), pageInfo.getEndRow(), mode,keyword );
+		
 //		String data = dao.toString() ;
 		
 //		String id = request.getParameter("id") ;
 //		int no = Integer.parseInt(request.getParameter("no")) ;
 		
-		List<Board> lists = dao.SelectDataList(0, 0, null, null) ;
 		System.out.println("board list count : " + lists.size());
 		
 		request.setAttribute("lists", lists);
