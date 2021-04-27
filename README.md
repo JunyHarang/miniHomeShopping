@@ -65,105 +65,105 @@ NoForm : 폼이 없을 때 사용할 공용 변수
 상품 수정, 삭제, 상세 보기, 리뷰는 풀다운 메뉴가 아니고, 목록 보기 페이지에서 구현하겠다.
 
 
--- 쇼핑몰 필요 기능 --
+### 쇼핑몰 필요 기능
 
-															비회원					일반회원					관리자
-
-================================
-
-나의 쇼핑 내역										X								O							 O
-장바구니 보기										X								O							 O
+| 내용 | 비회원 | 일반회원 | 관리자 |
+| ------ | ------ | ------- | ------ |
+| 나의 쇼핑 내역 | X | O | O |
+| 장바구니 보기  | X | O | O |
 
 
 
-Validator 인터페이스 만들기
-		유효성 검사 수행하기 위한 인터페이스
-		유효성 검사가 필요한 일반 컨트롤러 XXXController는 오버라이팅 하여 구현
-		유효성 검사에 실패 시 false 값 반환
-		public boolean validate(HttpServletRequest request);
-		SuperClass가 상속 받는다.
+#### Validator 인터페이스 만들기
+&nbsp;&nbsp;유효성 검사 수행하기 위한 인터페이스<br>
+&nbsp;&nbsp;유효성 검사가 필요한 일반 컨트롤러 XXXController는 오버라이팅 하여 구현<br>
+&nbsp;&nbsp;유효성 검사에 실패 시 false 값 반환<br>
+&nbsp;&nbsp;public boolean validate(HttpServletRequest request);<br>
+&nbsp;&nbsp;SuperClass가 상속 받는다.<br>
 		
-유효성 검사 절차
+#####유효성 검사 절차
 
-validate 메서드 에서 문제가 있는 파라미터에 접두가 err을 붙혀 request 영역에 바인딩한다.
-양식 태그에 별도 <span> 태그를 다음과 같이 작성.
-	<span class="form-control-static err">${errname}</span>
-공용 파일에 class="err"에 대한 스타일 지정
+validate 메서드 에서 문제가 있는 파라미터에 접두가 err을 붙혀 request 영역에 바인딩한다.<br>
+양식 태그에 별도 <span> 태그를 다음과 같이 작성.<br>
+	<span class="form-control-static err">${errname}</span><br>
+공용 파일에 class="err"에 대한 스타일 지정<br>
 
-오류 경고 메시지
+#####오류 경고 메시지
 
-어떤 로직에서 발생한 오류나 문제점에 대하여 사용자에게 경고 메시지는 다음과 같이 보여줄 것이다.
-SuperClass에 setErrorMessage(보여줄 메시지) 메서드 사용
-컨트롤러 파일에서 request 영역에 "errmsg"라는 속성에 메시지 저장
-common file에서 해당 오류/경고 메시지를 부트 스트랩의 Alerts 기능으로 출력
+어떤 로직에서 발생한 오류나 문제점에 대하여 사용자에게 경고 메시지는 다음과 같이 보여줄 것이다.<br>
+SuperClass에 setErrorMessage(보여줄 메시지) 메서드 사용<br>
+컨트롤러 파일에서 request 영역에 "errmsg"라는 속성에 메시지 저장<br>
+common file에서 해당 오류/경고 메시지를 부트 스트랩의 Alerts 기능으로 출력<br>
 
-회원 목록 보기
-관리자만 가능
+**회원 목록 보기**
+**관리자만 가능**
 
-게시물 목록 보기
-Command : boList
-boList.jsp
-Borad Dao : SelectDataList(int beginRow, int endRow) 
+####게시물 목록 보기
+#####Command : boList
+#####boList.jsp
+#####Borad Dao : SelectDataList(int beginRow, int endRow) 
 
-상품 목록 보기
-Command : prList
-prList.jsp 파일은 boList.jsp를 복사하여 생성
-ProductDao의 SelectDataList(int beginRow, int endRow) 
+####상품 목록 보기
+#####Command : prList
+#####prList.jsp 파일은 boList.jsp를 복사하여 생성
+#####ProductDao의 SelectDataList(int beginRow, int endRow) 
 
+---
 
-*/2021년 04월 26일 */
+### 2021년 04월 26일
 
-회원 가입
-아이디 중복 체크
-우편 번호 찾기
-폼 로딩 시 매니져 콤보 박스 자동으로 채우기
-회원 가입 클릭 시 유효성 검사
-DB에 추가
+**회원 가입**
+**아이디 중복 체크**
+**우편 번호 찾기**
+**폼 로딩 시 매니져 콤보 박스 자동으로 채우기**
+**회원 가입 클릭 시 유효성 검사**
+**DB에 추가**
 
-주요 파라미터
-isCheck :
-	값이 false이면 회원 가입 불가
-	아이디 중복 체크를 통과했을 경우에만 true로 변경
-	사용자가 새로운 아이디 입력(onkeyup Event) 시 false로 변경
+####주요 파라미터
+**isCheck :**
+&nbsp;	값이 false이면 회원 가입 불가<br>
+&nbsp;	아이디 중복 체크를 통과했을 경우에만 true로 변경<br>
+&nbsp;	사용자가 새로운 아이디 입력(onkeyup Event) 시 false로 변경<br>
 	
-postcodes Table : 우편 번호 관련 Table
+**postcodes Table : 우편 번호 관련 Table**
 
-우편 번호 Bean Class
+#####우편 번호 Bean Class
 shopping.common.model.postcode
 
-우편 번호 관련 Dao Class
-CompositeDao Class SelectDataZipcode() Method
-'도로 이름' 또는 '동면읍 이름' 또는 '검색할 단어' 컬럼에서 조건이 맞으면 모두 읽어 온다.
+#####우편 번호 관련 Dao Class
+**CompositeDao Class SelectDataZipcode() Method**
+&nbsp;'도로 이름' 또는 '동면읍 이름' 또는 '검색할 단어' 컬럼에서 조건이 맞으면 모두 읽어 온다.
 
-zipCheck 70 ~ 75 Line :
+####zipCheck 70 ~ 75 Line :
 
 ~~~
 
 <c:set var="address" value="${fn:trim(oneitem.si_nm)} 
-																${fn:trim(oneitem.sgg_nm)} 
-																${fn:trim(oneitem.rd_nm)} 
-																${fn:trim(oneitem.bd_ma_sn)} 
-																(${fn:trim(oneitem.emd_nm)} 
-																${fn:trim(oneitem.search_word)})" />
+&nbsp;${fn:trim(oneitem.sgg_nm)} 
+&nbsp;${fn:trim(oneitem.rd_nm)} 
+&nbsp;${fn:trim(oneitem.bd_ma_sn)} 
+&nbsp;(${fn:trim(oneitem.emd_nm)} 
+&nbsp;${fn:trim(oneitem.search_word)})" />
 
 ~~~
 
 fn은 function의 약자이고, trim은 공백을 없애기 위해 사용하는 메서드이다.
 
-AREA_CD 우편번호
-SI_NM 시도 (서울특별시, 경기도 등)
-SGG_NM 시구군(군산시, 창원시 합포구 등)
-BC_MA_SN 번지
-RD_NM 도로 이름
-EMD_NM 동면읍
-SEARCH_WORD 검색할 단어
+**AREA_CD 우편번호**
+**SI_NM 시도 (서울특별시, 경기도 등)**
+**SGG_NM 시구군(군산시, 창원시 합포구 등)**
+**BC_MA_SN 번지**
+**RD_NM 도로 이름**
+**EMD_NM 동면읍**
+**SEARCH_WORD 검색할 단어**
 
-폼 로딩 시 매니저 콤보 박스 자동 채우기
+#####폼 로딩 시 매니저 콤보 박스 자동 채우기
 MemberInsertController의 doGet()에 작업
 
-MemberDao Class의 GetManagerList() 만들기
+#####MemberDao Class의 GetManagerList() 만들기
 meInsertForm.jsp에서 콤보 박스 채워 넣기
 
+---
 
 ### 2021년 04월 27일 작업 내용
 
