@@ -245,7 +245,8 @@ shopping.utility 패키지에서 작성
 pageTest.java: Paging Test를 위한 Java Class
 paging.java: Paging Class
 
-### * 참고 사항 *
+### * 오늘의 참고 사항 *<br>
+---
 게시판 검색 버튼에서 검색을 누르면 원하는 페이지로 이동을 못해 원하는 결과를 못 받는 경우가 발생하였습니다.
 
 원래 **boList.jsp 70번째 줄** 검색 버튼에 **type이 submit**으로 되어 있었는데, **button**으로 변경을 하니 정상적으로 구동 되는 것을 확인 하였습니다.
@@ -253,6 +254,47 @@ paging.java: Paging Class
 ### 필드 검색 기능
 **자바 스크립트 함수 코딩**
 
-2021년 04월 28일 작업 내용<br>
-**5. 하이퍼 링크 이용 수정, 삭제 답글 페이지 이동 가능하게 만들기**
+## 2021년 04월 28일 작업 내용<br>
 
+**5. 하이퍼 링크 이용 수정, 삭제 답글 페이지 이동 가능하게 만들기**<br><br><br>
+
+#####BoardListController
+&nbsp;**변수 url 수정**
+
+#####boList.jsp
+&nbsp;**필드 검색 상태 값의 보전 기능 추가**<br><br><br>
+
+###게시물 목록 보기 페이지
+
+####게시물 제목 :클릭 시 상세 보기 페이지 이동
+
+&nbsp;**수정, 삭제, 답글 링크 만들고, 기능 구현**<br><br><br>
+
+**일반적으로 넘겨 주어야 할 파라미터 목록**<br>
+---
+&nbsp;&nbsp;- 기본키 (primary key)<br>
+&nbsp;&nbsp;- 페이지 번호(pageNumber)와 필드 검색 모드(mode)와 키워드(keyword)<br><br><br>
+
+#####Shopping.utility.FlowParameters Class<br>
+**다음 변수들을 Member로 가지고 있는 파라미터 처리 유틸리티 Class**<br>
+
+&nbsp;&nbsp;- 페이지 번호(pageNumber)<br>
+&nbsp;&nbsp;- 필드 검색 모드(mode)<br>
+&nbsp;&nbsp;- 키워드(Keyword)<br><br><br>
+
+### * 오늘의 참고 사항 *<br>
+---
+**게시판의 'primary Key'는 글 번호**
+
+#### 게시물 등록 하기<br>
+글 번호는 시퀀스 번호를 이용하여 자동 입력 되게 만들겠습니다.<br>
+작성자의 정보는 세션에 들어있는 정보를 사용하게 만들겠습니다.<br>
+조회수와 작성 일자 및 비고 컬럼은 DB의 기본값을 사용하겠습니다.<br>
+직접 입력할 정보는 글 제목, 글 내용, 작성자가 설정하는 비밀번호로 하겠습니다.<br>
+유효성 검사를 충족하게 만들겠습니다.<br><br><br>
+
+#### 게시물 수정 하기
+
+#### 게시물 삭제 하기
+
+#### 게시물 답글 쓰기

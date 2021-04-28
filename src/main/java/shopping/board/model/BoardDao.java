@@ -46,39 +46,56 @@ public class BoardDao extends SuperDao {
 	}	
 	
 	public int InsertData( Board bean ){
-		String sql = " " ;
-		sql += " " ;
-		sql += " " ;
+		String sql = " insert into boards( no, subject, writer, password, content, groupno ) " ;
+						sql += " values(myboard.nextval, ?, ? ,? , ?, myboard.currval) " ;
 
 		PreparedStatement pstmt = null ;
-		int cnt = -99999 ;
-		try {
-			if( conn == null ){ super.conn = super.getConnection() ; }
-			conn.setAutoCommit( false );
-			pstmt = super.conn.prepareStatement(sql) ;
-			
+		int cnt = -1 ;
 		
-			cnt = pstmt.executeUpdate() ; 
-			conn.commit(); 
+		try {
+			
+						if( conn == null ){ 
+							super.conn = super.getConnection() ; 
+						}
+					
+						conn.setAutoCommit( false );
+						pstmt = super.conn.prepareStatement(sql) ;
+						
+						pstmt.setString( 1, bean.getSubject() );
+						pstmt.setString( 2, bean.getWriter() );
+						pstmt.setString( 3, bean.getPassword() );
+						pstmt.setString( 4, bean.getContent() );
+					
+						cnt = pstmt.executeUpdate() ; 
+						conn.commit(); 
+		
 		} catch (Exception e) {
+			
 			SQLException err = (SQLException)e ;			
 			cnt = - err.getErrorCode() ;			
 			e.printStackTrace();
 			try {
 				conn.rollback(); 
+			
 			} catch (Exception e2) {
+				
 				e2.printStackTrace();
 			}
 		} finally{
+			
 			try {
-				if( pstmt != null ){ pstmt.close(); }
-				super.closeConnection(); 
+				if( pstmt != null ){
+					pstmt.close(); 
+				}
+				super.closeConnection();
+				
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 		}
 		return cnt ;
 	}
+	
 	public int UpdateData( Board bean ){
 		String sql = " " ;
 		sql += " " ;
