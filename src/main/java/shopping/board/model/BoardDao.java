@@ -379,23 +379,21 @@ public class BoardDao extends SuperDao {
 	public int UpdateReadhit(int no) {
 		PreparedStatement pstmt = null ;
 		
-		String sql = " " ;
-		sql += " " ;
-		sql += " " ;
+		String sql = " update boards set readhit = readhit + 1 where no = ? " ;
 		
-		int cnt = -99999 ; 
+		int cnt = - 1 ; 
 		try {
 			if( this.conn == null ){ this.conn = this.getConnection() ; }
 			conn.setAutoCommit( false ); 
 			pstmt = this.conn.prepareStatement( sql ) ;
 			
-			
+			pstmt.setInt(1, no);
 			
 			cnt = pstmt.executeUpdate() ;
 			conn.commit(); 
 		} catch (Exception e) {
 			e.printStackTrace();
-			cnt = -99999 ;
+			cnt = - 1 ;
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
@@ -411,6 +409,7 @@ public class BoardDao extends SuperDao {
 		}
 		return cnt ; 
 	}
+	
 	public int SelectTotalCount(String mode, String keyword) {
 		PreparedStatement pstmt = null ;
 		ResultSet rs = null ;				
