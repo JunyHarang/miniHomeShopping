@@ -47,7 +47,6 @@
 							<th>글 내용</th>
 							<th>조회수</th>
 							<th>작성 일자</th>
-							<th>비고</th>	
 							<th>수정</th>
 							<th>삭제</th>
 							<th>답글 쓰기</th>
@@ -107,24 +106,29 @@
 								
 								<td>${bean.regdate}</td>
 								
-								<td>${bean.depth}</td>
-								
 								<td>${bean.remark}</td>
 								
 								<td>
-								<a href="<%=NoForm%>boUpdate&no=${bean.no}&${requestScope.parameters}">
-										수정
-									</a>
-								</td>
-								
-								<td>
-									<c:if test="${sessionScope.loginfo.id == bean.id}">
-										<a href="<%=NoForm%>boDelete&no=${bean.no}&${requestScope.parameters}">
-												삭제
+									<c:if test="${sessionScope.loginfo.id == bean.writer}">
+										<a href="<%=NoForm%>boUpdate&no=${bean.no}&${requestScope.parameters}">
+											수정
 										</a>
 									</c:if>
 									
-									<c:if test="${sessionScope.loginfo.id != bean.id}">
+									<c:if test="${sessionScope.loginfo.id != bean.writer}">
+										수정
+									</c:if>
+									
+								</td>
+								
+								<td>
+									<c:if test="${sessionScope.loginfo.id == bean.writer}">
+										<a href="<%=NoForm%>boDelete&no=${bean.no}&${requestScope.parameters}">
+											삭제
+										</a>
+									</c:if>
+									
+									<c:if test="${sessionScope.loginfo.id != bean.writer}">
 										삭제
 									</c:if>
 									

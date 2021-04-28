@@ -33,7 +33,7 @@ public class BoardInsertController extends SuperClass {
 		System.out.println( "bean 정보 확인" );
 		System.out.println( bean.toString () );
 		
-		if ( this.validate( request ) ) {
+		if ( this.validate( request ) == true ) {
 			System.out.println("게시글 입력 유효성 검사 성공");
 			
 			BoardDao dao = new BoardDao();

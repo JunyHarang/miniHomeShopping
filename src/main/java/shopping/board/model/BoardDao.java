@@ -97,51 +97,60 @@ public class BoardDao extends SuperDao {
 	}
 	
 	public int UpdateData( Board bean ){
-		String sql = " " ;
-		sql += " " ;
-		sql += " " ;
+		String sql = " update boards set content=?, password=?, subject=?, writer=?, readhit=? where no = ? " ;
 		
 		PreparedStatement pstmt = null ;
-		int cnt = -99999 ;
+		int cnt = - 1 ;
+		
 		try {
 			if( conn == null ){ super.conn = super.getConnection() ; }
 			conn.setAutoCommit( false );
 			pstmt = super.conn.prepareStatement(sql) ;
 
-		
+			pstmt.setString(1, bean.getContent());
+			pstmt.setString(2, bean.getPassword());
+			pstmt.setString(3, bean.getSubject());
+			pstmt.setString(4, bean.getWriter());
+			pstmt.setInt		 (5, bean.getReadhit());
+			pstmt.setInt		 (6, bean.getNo());
+			pstmt.setString(7, bean.getRegdate());
 			
 			cnt = pstmt.executeUpdate() ; 
 			conn.commit(); 
-		} catch (Exception e) {
-			SQLException err = (SQLException)e ;			
-			cnt = - err.getErrorCode() ;			
-			e.printStackTrace();
-			try {
-				conn.rollback(); 
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		} finally{
-			try {
-				if( pstmt != null ){ pstmt.close(); }
-				super.closeConnection(); 
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
+			} catch (Exception e) {
+				SQLException err = (SQLException)e ;			
+				cnt = - err.getErrorCode() ;			
+				e.printStackTrace();
+					try {
+						conn.rollback(); 
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+			} finally{
+					try {
+						if( pstmt != null ){ pstmt.close(); }
+						super.closeConnection(); 
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
 		}
 		return cnt ;
 	}
-	public int DeleteData( int pmkey ){
-		String sql = " " ;
-		sql += " " ;
+	public int DeleteData( int no ){
+		String sql = " delete from boards " ;
+		sql += " where no = ? " ;
 		sql += " " ;
 		
 		PreparedStatement pstmt = null ;
-		int cnt = -99999 ;
+		int cnt = - 1 ;
+		
 		try {
+			
 			if( conn == null ){ super.conn = super.getConnection() ; }
 			conn.setAutoCommit( false );
 			pstmt = super.conn.prepareStatement(sql) ;
+			
+			pstmt.setInt(1, no);
 			
 			cnt = pstmt.executeUpdate() ; 
 			conn.commit(); 
@@ -239,32 +248,56 @@ public class BoardDao extends SuperDao {
 		PreparedStatement pstmt = null ;
 		ResultSet rs = null ;				
 		
-		String sql = " " ;
-		sql += " " ;
-		sql += " " ;
+		String sql = " select * from boards where no = ? " ;
 		
 		Board bean = null ;
+		
+		List<Board> lists = new ArrayList<Board>();
+		
 		try {
-			if( this.conn == null ){ this.conn = this.getConnection() ; }			
+			if( this.conn == null ){ 
+				this.conn = this.getConnection() ; 
+			}
+			
 			pstmt = this.conn.prepareStatement(sql) ;			
-			pstmt.setInt( 1, no   ); 
+			pstmt.setInt( 1, no ); 
 			rs = pstmt.executeQuery() ; 
 			
-			if ( rs.next() ) { 
+				if ( rs.next() ) { 
+					
+					bean = new Board();
+					
+					bean.setNo(rs.getInt("no"));
+					bean.setReadhit(rs.getInt("readhit"));
+					bean.setGroupno(rs.getInt("groupno"));
+					bean.setOrderno(rs.getInt("orderno"));
+					bean.setDepth(rs.getInt("depth"));
+					
+					bean.setSubject(rs.getString("subject"));
+					bean.setWriter(rs.getString("writer"));
+					bean.setPassword(rs.getString("password"));
+					bean.setContent(rs.getString("content"));
+					bean.setRegdate(rs.getString("regdate"));
+					bean.setRemark(rs.getString("remark"));
+					
+					lists.add(bean);
+				}
 			
-			}
-			
-		} catch (SQLException e) {			
-			e.printStackTrace();
-		} finally{
-			try {
-				if( rs != null){ rs.close(); } 
-				if( pstmt != null){ pstmt.close(); } 
-				this.closeConnection() ;
-			} catch (Exception e2) {
-				e2.printStackTrace(); 
-			}
-		} 		
+				} catch (SQLException e) {			
+					e.printStackTrace();
+					
+					} finally{
+						
+							try {
+								
+								if( rs != null){ rs.close(); } 
+								if( pstmt != null){ pstmt.close(); } 
+								this.closeConnection() ;
+								
+							} catch (Exception e2) {
+								e2.printStackTrace(); 
+							}
+				} 		
 		return bean  ;
 		
 	} // SelectDataList 끝
@@ -279,7 +312,9 @@ public class BoardDao extends SuperDao {
 		sql += " " ; 
 
 		List<Board> lists = new ArrayList<Board>() ;
+		
 		try {
+			
 			if( this.conn == null ){ this.conn = this.getConnection() ; }			
 			pstmt = this.conn.prepareStatement(sql) ;			
 

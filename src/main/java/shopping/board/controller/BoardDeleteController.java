@@ -18,15 +18,21 @@ public class BoardDeleteController extends SuperClass {
 		super.doGet(request, response);
 		
 		Board bean = null ;
-		BoardDao dao = new BoardDao();
-		String data = dao.toString() ;
+//		BoardDao dao = new BoardDao();
+//		String data = dao.toString() ;
 		
-		String id = request.getParameter("id") ;
+//		String id = request.getParameter("id") ;
 		int no = Integer.parseInt(request.getParameter("no")) ;
 		
-		List<Board> lists = new ArrayList<Board>() ;
+		BoardDao dao = new BoardDao();
+		int cnt = - 1;
+		cnt = dao.DeleteData(no);
 		
-		request.setAttribute("bean", bean);
+		new BoardListController().doGet(request, response);
+		
+//		List<Board> lists = new ArrayList<Board>() ;
+		
+	//	request.setAttribute("bean", bean);
 		
 		String gotopage = "/Board/main.jsp" ;
 		super.GotoPage(gotopage);
