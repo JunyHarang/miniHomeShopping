@@ -29,6 +29,9 @@
 			
 		});
 	</script>
+	<style type="text/css">
+		.badge{background:orange; color:yellow;}
+	</style>
 </head>
 <body>
 	<div class="container col-sm-offset-<%=offset%> col-sm-<%=mywidth%>">
@@ -95,6 +98,10 @@
 								<td>${bean.password}</td>
 								
 								<td>
+									<c:forEach var="cnt" begin="1" end="${bean.depth}">
+										<span class="badge">re</span>&nbsp;
+									</c:forEach>
+									
 									<a href="<%=NoForm%>boDetailView&no=${bean.no}&${requestScope.parameters}">
 										${bean.subject}
 									</a>
@@ -105,8 +112,6 @@
 								<td>${bean.readhit}</td>
 								
 								<td>${bean.regdate}</td>
-								
-								<td>${bean.remark}</td>
 								
 								<td>
 									<c:if test="${sessionScope.loginfo.id == bean.writer}">
@@ -135,10 +140,14 @@
 								</td>
 								
 								<td>
-									<c:set var="reply" value="&groupno=${bean.groupno}&orderno=${bean.orderno}&depth=${bean.depth}" />
-									<a href="<%=NoForm%>boReply&no=${bean.no}&${requestScope.parameters}${reply}">
+									<c:if test="${bean.depth < 5}">
+										<c:set var="reply" value="&groupno=${bean.groupno}&orderno=${bean.orderno}&depth=${bean.depth}" />
+										
+										<a href="<%=NoForm%>boReply&no=${bean.no}&${requestScope.parameters}${reply}">
 										답글 쓰기
-									</a>
+										</a>
+									</c:if>
+									
 								</td>
 							</tr>
 							

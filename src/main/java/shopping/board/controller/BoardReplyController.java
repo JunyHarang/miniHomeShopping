@@ -6,19 +6,39 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import oracle.jdbc.dbaccess.Message;
 import shopping.board.model.Board;
 import shopping.board.model.BoardDao;
 import shopping.common.controller.SuperClass;
 
 public class BoardReplyController extends SuperClass {
 	private Board bean = null;
+	private BoardDao dao = null;
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doGet(request, response);
 		
-		String gotopage = "/board/boReplyForm.jsp" ;
-		super.GotoPage(gotopage);
+		dao = new BoardDao();
+		
+		int groupno = Integer.parseInt(request.getParameter("groupno"));
+		
+		int cnt = - 1;
+		cnt = dao.GetGroupnoCount(groupno);
+		
+		int replyNum = 5;
+		
+		if (cnt == replyNum) { /* 답글(댓글)작성 개수 초과 시 처리 */
+			String message = "답글 작성 개수 " + replyNum + " 를 초과하였습니다.";
+			super.setErrorMessage(message);
+			new BoardListController().doGet(request, response);
+			
+		} else {
+			String gotopage = "/board/boReplyForm.jsp" ;
+			super.GotoPage(gotopage);
+		}
+		
+		
 		
 	}	// doGet 끝
 	
@@ -37,8 +57,8 @@ public class BoardReplyController extends SuperClass {
 		int depth = Integer.parseInt(request.getParameter("depth"));
 		
 		bean.setGroupno( groupno );
-		bean.setOrderno( orderno + 1 );
-		bean.setDepth(depth + 1);
+		bean.setOrderno( orderno );
+		bean.setDepth( depth );
 		
 		System.out.println( "bean 정보 확인" );
 		System.out.println( bean.toString () );
@@ -46,7 +66,7 @@ public class BoardReplyController extends SuperClass {
 		if ( this.validate( request ) == true ) {
 			System.out.println("답글(댓글) 입력 유효성 검사 성공");
 			
-			BoardDao dao = new BoardDao();
+			dao = new BoardDao();
 			int cnt = - 1;
 			cnt = dao.ReplyData(bean);
 			
@@ -73,12 +93,13 @@ public class BoardReplyController extends SuperClass {
 				}
 				
 				if (bean.getPassword().length() < 4 || bean.getPassword().length() > 10) {
-					request.setAttribute(super.PREFIX + "pasword", "비밀번호은 4자리 이상 10자리 이하로 입력 해 주시기 바랍니다!");
+					request.setAttribute(super.PREFIX + "password", "비밀번호은 4자리 이상 10자리 이하로 입력 해 주시기 바랍니다!");
 					isCheck = false;
 				}
+				System.out.println(bean.getPassword());
 				
-				if (bean.getContent().length() < 4 || bean.getContent().length() > 10) {
-					request.setAttribute(super.PREFIX + "password", "비밀번호는 4자리 이상 10자리 이하로 입력 해 주시기 바랍니다!");
+				if (bean.getContent().length() < 1 || bean.getContent().length() > 2000) {
+					request.setAttribute(super.PREFIX + "content", "내용은 1자리 이상 2000자리 이하로 입력 해 주시기 바랍니다!");
 					isCheck = false;
 				}
 				

@@ -321,6 +321,7 @@ paging.java: Paging Class
 <br>
 글의 깊이(depth 컬럼)는 3개 까지만 허용 하겠습니다.<br>
 원 글 1개에 대한 최대 답글(댓글)은 5개를 초과하지 못하도록 하겠습니다.<br>
+Controller에서 Dao를 통하여 해당 groupno와 동일한 값을 가지는 행의 수를 확인하도록 만들겠습니다.<br>
 답글(댓글) 앞에는 re 뱃지를 붙히도록 하겠습니다.<br>
 
 ---
@@ -332,11 +333,11 @@ paging.java: Paging Class
 
 
 ## 2021년 04월 29일 작업 내용<br>
-**게시물 답글 달기**<br>
+##게시물 답글 달기<br>
 
 ---
 
-1. boards Table의 groupno 갱신<br>
+1.boards Table의 groupno 갱신<br>
 
 ~~~
 update boards set groupno = no;
@@ -344,16 +345,19 @@ commit;
 ~~~
 <br><br><br>
 
-2. BoardDao.SelectDataList() topN 구문 over()의 order by 구문 수정<br>
+2.BoardDao.SelectDataList() topN 구문 over()의 order by 구문 수정<br>
 
 ~~~
 order by groupno desc, orderno asc, depth asc
 ~~~
 <br><br><br>
 
-3. 답글(댓글) 관련 파마미터 
+3.답글(댓글) 관련 파마미터 
 boList.jsp에서 답글 관련 파라미터들을 문자열로 결합 작업<br>
 
 ### * 오늘의 참고 사항 *<br>
 
 현재 문제 사항 : 댓글을 달고 나서 페이지 새로고침 시 동일한 게시물이 올라가는 문제<br>
+
+##파일 업로드<br>
+WebContent\WEB-INF\lib\cos.jar 파일이 존재해야 합니다.

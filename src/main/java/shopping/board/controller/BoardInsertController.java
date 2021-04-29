@@ -63,7 +63,7 @@ public class BoardInsertController extends SuperClass {
 				}
 				
 				if (bean.getPassword().length() < 4 || bean.getPassword().length() > 10) {
-					request.setAttribute(super.PREFIX + "pasword", "비밀번호은 4자리 이상 10자리 이하로 입력 해 주시기 바랍니다!");
+					request.setAttribute(super.PREFIX + "password", "비밀번호은 4자리 이상 10자리 이하로 입력 해 주시기 바랍니다!");
 					isCheck = false;
 				}
 				

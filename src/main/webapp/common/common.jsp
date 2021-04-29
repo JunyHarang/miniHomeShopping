@@ -105,6 +105,7 @@
 								<c:if test="${whologin == 2}">
 									<a href="<%=NoForm%>meList">회원 목록 보기</a>
 								</c:if>
+								
 							</li>
 						</ul>
 					</li>
@@ -115,12 +116,7 @@
 							<li>
 								<c:if test="${whologin != 0}">
 									<a href="<%=NoForm%>boInsert">게시물 등록</a>
-								</c:if>
-								
-								<a href="<%=NoForm%>boList">게시물 목록 보기</a>
-								
-								<c:if test="${whologin == 2}">
-									<a href="<%=NoForm%>meUpdate">회원 정보 수정</a>
+									<a href="<%=NoForm%>boList">게시물 목록 보기</a>
 								</c:if>
 								
 							</li>
@@ -159,12 +155,17 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Data 보기<b class="caret"></b></a>
 						<ul class="dropdown-menu">
+						
 							<li>
+							
+								<c:if test="${whologin != 0}">
 									<a href="<%=NoForm%>viewExam01">회원과 게시물</a>
 									<a href="<%=NoForm%>viewExam02">회원별 게시물 건수</a>
 									<a href="<%=NoForm%>viewExam03">주문 정보</a>
 									<a href="<%=NoForm%>viewExam04">고객별 매출 총액</a>
 									<a href="<%=NoForm%>viewExam05">회원별 주문 건수</a>
+								</c:if>
+								
 							</li>
 						</ul>
 					</li>

@@ -10,7 +10,8 @@ import shopping.common.model.SuperDao;
 
 public class BoardDao extends SuperDao {
 	public int ReplyData( Board bean ){
-		String sql = " insert into boards ( no, subject, writer, password, content, groupno, orderno, depth ) values ( myboard.nextval, ?, ?, ?, ?, ?, ?, ? ) " ;
+		
+		String sql = " update boards set orderno = orderno + 1  where groupno = ? and orderno > ? ";
 		
 		PreparedStatement pstmt = null ;
 		int cnt = - 1;
@@ -21,24 +22,25 @@ public class BoardDao extends SuperDao {
 			conn.setAutoCommit( false );
 			pstmt = super.conn.prepareStatement(sql) ;
 			
+			// 치환
+			pstmt.setInt(1, bean.getGroupno());
+			pstmt.setInt(2, bean.getOrderno());
+
+			
+			cnt = pstmt.executeUpdate() ; 
+			
+			sql = " insert into boards ( no, subject, writer, password, content, groupno, orderno, depth ) values ( myboard.nextval, ?, ?, ?, ?, ?, ?, ? ) " ;
+			
+			pstmt = null;
+			pstmt = conn.prepareStatement(sql);
+			
 			pstmt.setString(1, bean.getSubject());
 			pstmt.setString(2, bean.getWriter());
 			pstmt.setString(3, bean.getPassword());
 			pstmt.setString(4, bean.getContent());
 			pstmt.setInt		 (5, bean.getGroupno());
-			pstmt.setInt		 (6, bean.getOrderno());
-			pstmt.setInt		 (7, bean.getDepth());
-			
-			cnt = pstmt.executeUpdate() ; 
-			
-			sql = " update boards set orderno = orderno + 1  where groupno = ? and orderno > ? ";
-			
-			pstmt = null;
-			pstmt = conn.prepareStatement(sql);
-			
-			// 치환
-			pstmt.setInt(1, bean.getGroupno());
-			pstmt.setInt(2, bean.getOrderno());
+			pstmt.setInt		 (6, bean.getOrderno() +1 );
+			pstmt.setInt		 (7, bean.getDepth() +1 );
 			
 			cnt = pstmt.executeUpdate() ;
 			
@@ -510,35 +512,42 @@ public class BoardDao extends SuperDao {
 	}
 	
 
-	public int UpdateRemark(String id) {
+	public int GetGroupnoCount(int groupno) {
+
 		PreparedStatement pstmt = null ;
-		String sql = " " ;
-		sql += " " ;
-		sql += " " ;
-		int cnt = -99999 ;  
+		ResultSet rs = null ;				
+
+		String sql = " select count(*) as cnt from boards where groupno = ? " ;
+		
+		int cnt = 0 ; 
+		
 		try {
-			if( this.conn == null ){ this.conn = this.getConnection() ; }
-			conn.setAutoCommit( false ); 
-			pstmt = this.conn.prepareStatement( sql ) ;
 			
-			cnt = pstmt.executeUpdate() ;
-			conn.commit(); 
-		} catch (Exception e) {
-			e.printStackTrace();
-			cnt = -99999 ;
-			try {
-				conn.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+			if( this.conn == null ) { 
+				this.conn = this.getConnection() ; 
+			}			
+			
+			pstmt = this.conn.prepareStatement(sql) ;
+			
+			pstmt.setInt(1, groupno);
+			
+			rs = pstmt.executeQuery() ; 
+			
+			if (rs.next()) {
+				cnt = rs.getInt("cnt");
 			}
+			
+		} catch (SQLException e) {			
+			e.printStackTrace();
 		} finally{
 			try {
-				if( pstmt != null ){ pstmt.close(); }
-				this.closeConnection();
+				if( rs != null){ rs.close(); } 
+				if( pstmt != null){ pstmt.close(); } 
+				this.closeConnection() ;
 			} catch (Exception e2) {
 				e2.printStackTrace(); 
 			}
-		}
-		return cnt ; 
+		} 		
+		return cnt  ; 
 	}
 }
