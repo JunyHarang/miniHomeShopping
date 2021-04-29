@@ -73,5 +73,5 @@ public class BoardInsertController extends SuperClass {
 				}
 				
 			return isCheck;
-	}
-}
+	} // validate 끝
+} // Class 끝

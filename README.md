@@ -271,7 +271,9 @@ paging.java: Paging Class
 &nbsp;**수정, 삭제, 답글 링크 만들고, 기능 구현**<br><br><br>
 
 **일반적으로 넘겨 주어야 할 파라미터 목록**<br>
+
 ---
+
 &nbsp;&nbsp;- 기본키 (primary key)<br>
 &nbsp;&nbsp;- 페이지 번호(pageNumber)와 필드 검색 모드(mode)와 키워드(keyword)<br><br><br>
 
@@ -283,12 +285,10 @@ paging.java: Paging Class
 &nbsp;&nbsp;- 키워드(Keyword)<br><br><br>
 
 ### * 오늘의 참고 사항 *<br>
----
+
 **게시판의 'primary Key'는 글 번호**
 
 #### 게시물 등록 하기<br>
-
----
 
 글 번호는 시퀀스 번호를 이용하여 자동 입력 되게 만들겠습니다.<br>
 작성자의 정보는 세션에 들어있는 정보를 사용하게 만들겠습니다.<br>
@@ -297,8 +297,6 @@ paging.java: Paging Class
 유효성 검사를 충족하게 만들겠습니다.<br><br><br>
 
 #### 게시물 수정 하기<br>
-
----
 
 자신이 작성한 글만 수정이 가능하게 만들겠습니다.<br>
 이전에 작성한 데이터 목록을 보이게 만들겠습니다.<br>
@@ -316,11 +314,18 @@ paging.java: Paging Class
 
 #### 게시물 답글 쓰기<br>
 
+게시물 답글이 잘 되도록 만드려고 합니다.<br>
+유효성 검사 조건을 통과하게 하고 싶습니다.<br>
+페이징 처리가 잘 되도록 만드려고 합니다.<br>
+원 글 하단에 답글이 배치 되도록 만들겠습니다.
+<br>
+글의 깊이(depth 컬럼)는 3개 까지만 허용 하겠습니다.<br>
+원 글 1개에 대한 최대 답글(댓글)은 5개를 초과하지 못하도록 하겠습니다.<br>
+답글(댓글) 앞에는 re 뱃지를 붙히도록 하겠습니다.<br>
+
 ---
 
 #### 상품 목록 보기<br>
-
----
 
 페이징 처리가 되도록 만들겠습니다.<br>
 필드 검색이 되도록 만들겠습니다.<br><br><br>
@@ -331,7 +336,7 @@ paging.java: Paging Class
 
 ---
 
-01. boards Table의 groupno 갱신<br>
+1. boards Table의 groupno 갱신<br>
 
 ~~~
 update boards set groupno = no;
@@ -339,14 +344,12 @@ commit;
 ~~~
 <br><br><br>
 
-02. BoardDao.SelectDataList() topN 구문 over()의 order by 구문 수정<br>
+2. BoardDao.SelectDataList() topN 구문 over()의 order by 구문 수정<br>
 
 ~~~
 order by groupno desc, orderno asc, depth asc
 ~~~
 <br><br><br>
 
-게시물 답글이 잘 되도록 만드려고 합니다.
-유효성 검사 조건을 통과하게 하고 싶습니다.
-페이징 처리가 잘 되도록 만드려고 합니다.
-원 글 하단에 답글이 배치 되도록 만들겠습니다.
+3. 답글(댓글) 관련 파마미터 
+boList.jsp에서 답글 관련 파라미터들을 문자열로 결합 작업<br>

@@ -135,7 +135,8 @@
 								</td>
 								
 								<td>
-								<a href="<%=NoForm%>boReply&no=${bean.no}=&{bean.no}&${requestScope.parameters}">
+									<c:set var="reply" value="&groupno=${bean.groupno}&orderno=${bean.orderno}&depth=${bean.depth}" />
+									<a href="<%=NoForm%>boReply&no=${bean.no}&${requestScope.parameters}${reply}">
 										답글 쓰기
 									</a>
 								</td>
