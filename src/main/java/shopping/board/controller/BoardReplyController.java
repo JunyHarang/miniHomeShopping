@@ -32,6 +32,14 @@ public class BoardReplyController extends SuperClass {
 		bean.setSubject(request.getParameter("subject"));
 		bean.setWriter(request.getParameter("writer"));
 		
+		int groupno = Integer.parseInt(request.getParameter("groupno"));
+		int orderno = Integer.parseInt(request.getParameter("orderno"));
+		int depth = Integer.parseInt(request.getParameter("depth"));
+		
+		bean.setGroupno( groupno );
+		bean.setOrderno( orderno + 1 );
+		bean.setDepth(depth + 1);
+		
 		System.out.println( "bean 정보 확인" );
 		System.out.println( bean.toString () );
 		

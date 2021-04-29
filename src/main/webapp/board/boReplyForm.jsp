@@ -31,6 +31,13 @@
 				    
 				    <input type="hidden" name="command" value="boReply">
 				    
+				    <input type="text" name="pageNumber" value="<%=request.getParameter("pageNumer")%>">
+				    <input type="text" name="mode" value="<%=request.getParameter("mode")%>">
+				    <input type="text" name="keyword" value="<%=request.getParameter("keyword")%>">
+				    <input type="text" name="groupno" value="<%=request.getParameter("groupno")%>">
+				    <input type="text" name="orderno" value="<%=request.getParameter("orderno")%>">
+				    <input type="text" name="depth" value="<%=request.getParameter("depth")%>">
+				    
 					<div class="form-group">
 				      	<label class="control-label col-sm-<%=formleft%>" for="writer">작성자</label>
 				      	

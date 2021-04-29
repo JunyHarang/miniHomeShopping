@@ -10,40 +10,64 @@ import shopping.common.model.SuperDao;
 
 public class BoardDao extends SuperDao {
 	public int ReplyData( Board bean ){
-		String sql = " " ;
-		sql += " " ;
-		sql += " " ;
+		String sql = " insert into boards ( no, subject, writer, password, content, groupno, orderno, depth ) values ( myboard.nextval, ?, ?, ?, ?, ?, ?, ? ) " ;
 		
 		PreparedStatement pstmt = null ;
-		int cnt = -99999 ;
+		int cnt = - 1;
+		
 		try {
+			
 			if( conn == null ){ super.conn = super.getConnection() ; }
 			conn.setAutoCommit( false );
 			pstmt = super.conn.prepareStatement(sql) ;
 			
-			
+			pstmt.setString(1, bean.getSubject());
+			pstmt.setString(2, bean.getWriter());
+			pstmt.setString(3, bean.getPassword());
+			pstmt.setString(4, bean.getContent());
+			pstmt.setInt		 (5, bean.getGroupno());
+			pstmt.setInt		 (6, bean.getOrderno());
+			pstmt.setInt		 (7, bean.getDepth());
 			
 			cnt = pstmt.executeUpdate() ; 
-			conn.commit(); 
+			
+			sql = " update boards set orderno = orderno + 1  where groupno = ? and orderno > ? ";
+			
+			pstmt = null;
+			pstmt = conn.prepareStatement(sql);
+			
+			// 치환
+			pstmt.setInt(1, bean.getGroupno());
+			pstmt.setInt(2, bean.getOrderno());
+			
+			cnt = pstmt.executeUpdate() ;
+			
+			conn.commit();
+			
 		} catch (Exception e) {
 			SQLException err = (SQLException)e ;			
 			cnt = - err.getErrorCode() ;			
 			e.printStackTrace();
 			try {
-				conn.rollback(); 
+				conn.rollback();
+				
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
+			
 		} finally{
+			
 			try {
 				if( pstmt != null ){ pstmt.close(); }
 				super.closeConnection(); 
+				
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 		}
 		return cnt ;
-	}	
+		
+	} // ReplyData 끝
 	
 	public int InsertData( Board bean ){
 		String sql = " insert into boards( no, subject, writer, password, content, groupno ) " ;
