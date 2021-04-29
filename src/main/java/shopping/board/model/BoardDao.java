@@ -182,7 +182,7 @@ public class BoardDao extends SuperDao {
 		ResultSet rs = null ;
 		
 		 String sql = " select ranking, no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark ";
-		 		  		 sql += " from ( select no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark, rank() over(order by no desc) as ranking from boards ";
+		 		  		 sql += " from ( select no, subject, writer, password, content, readhit, regdate, groupno, orderno, depth, remark, rank() over(order by groupno desc, orderno asc, depth asc) as ranking from boards ";
 		 				 
 		 if (mode.equalsIgnoreCase("all") == false) {
 		 		 System.out.println("Not all Search Mode");
