@@ -324,3 +324,29 @@ paging.java: Paging Class
 
 페이징 처리가 되도록 만들겠습니다.<br>
 필드 검색이 되도록 만들겠습니다.<br><br><br>
+
+
+## 2021년 04월 29일 작업 내용<br>
+**게시물 답글 달기**<br>
+
+---
+
+01. boards Table의 groupno 갱신<br>
+
+~~~
+update boards set groupno = no;
+commit;
+~~~
+<br><br><br>
+
+02. BoardDao.SelectDataList() topN 구문 over()의 order by 구문 수정<br>
+
+~~~
+order by groupno desc, orderno asc, depth asc
+~~~
+<br><br><br>
+
+게시물 답글이 잘 되도록 만드려고 합니다.
+유효성 검사 조건을 통과하게 하고 싶습니다.
+페이징 처리가 잘 되도록 만드려고 합니다.
+원 글 하단에 답글이 배치 되도록 만들겠습니다.
