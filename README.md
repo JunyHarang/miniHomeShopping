@@ -353,3 +353,7 @@ order by groupno desc, orderno asc, depth asc
 
 3. 답글(댓글) 관련 파마미터 
 boList.jsp에서 답글 관련 파라미터들을 문자열로 결합 작업<br>
+
+### * 오늘의 참고 사항 *<br>
+
+현재 문제 사항 : 댓글을 달고 나서 페이지 새로고침 시 동일한 게시물이 올라가는 문제<br>
