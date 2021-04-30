@@ -398,6 +398,13 @@ mycart:session에 들어 있는 회원의 장바구니 이름이 들어 있는 �
 session 영역에 수정된 카트(mycart)를 다시 바인딩하게 만들 것이에요.<br>
 장바구니 목록 페이지(MallListController)로 이동하게 만들 것이에요.<br>
 
+#### 결재하기<br><br>
+고객 마일리지 포인트가 적립되게 만들 것이에요.<br>
+상품의 재고 수량이 변경되도록 만들 것이에요.<br>
+송장 번호 1개 당 매출이 발생되도록 할 것이에요. (orders Talbe)<br>
+매출 상세 내역을 기록 할 것이에요.(orderdetails Table)<br>
+결재가 되고 나면 shoplists, mycart, totalAmount, totalPoint 정보를 지워주어야 하는 것이에요.<br>
+
 ### * 오늘의 참고 사항 *<br><br>
 
 현재 문제 사항 : 상품 상세 보기에서 사진이 나오지 않는 문제<br>

@@ -24,6 +24,7 @@ public class MallOrderController extends SuperClass {
 		String gotopage = "/member/main.jsp" ;
 		super.GotoPage(gotopage);
 	}	
+	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doPost(request, response);
