@@ -378,10 +378,19 @@ WebContent\WEB-INF\lib\cos.jar 파일이 존재해야 합니다.<br><br>
 **게시물 상세보기**
 
 #### 쇼핑몰 관련
-shopping.common.model.MyCartList
+shopping.common.model.MyCartList<br>
 &nbsp;&nbsp;사이트 안에 카트 개념을 위한 Utility Class 입니다. 
 
-shopping.common.model.ShoppingInfo
+shopping.common.model.ShoppingInfo<br>
+&nbsp;&nbsp;고객이 주문한 상품 1개에 대한 정보를 담고 있는 Class. 
+
+##### 관련 변수<br><br>
+loginfo: session에 들어 있는 login 한 사람의 정보를 담고 있는 변수<br><br>
+
+shoplists: session에 들어 있는 쇼핑 내역을 담고 있는 List 컬렉션(shoppingInfo)가 들어있는 변수<br><br>
+
+mycart:session에 들어 있는 회원의 장바구니 이름이 들어 있는 변수<br><br><br>
+
 
 ### * 오늘의 참고 사항 *<br>
 

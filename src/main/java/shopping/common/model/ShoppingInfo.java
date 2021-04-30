@@ -9,16 +9,18 @@ public class ShoppingInfo {
 	private int point ;
 	//private int amount ;
 	
-	//getter, setter, toString �޼ҵ� ����
+	//getter, setter, toString 
 		
 	public int getPnum() {
 		return pnum;
 	}
+	
 	@Override
 	public String toString() {
 		return "ShoppingInfo [pnum=" + pnum + ", pname=" + pname + ", qty=" + qty + ", price=" + price + ", image="
 				+ image + ", point=" + point + "]";
-	}
+	} // toString 끝
+	
 	public void setPnum(int pnum) {
 		this.pnum = pnum;
 	}
@@ -54,4 +56,4 @@ public class ShoppingInfo {
 	}
 	
 	
-}
+} // Class 끝
