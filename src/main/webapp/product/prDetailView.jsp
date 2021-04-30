@@ -31,9 +31,7 @@
 						<tr>
 							<td>
 								<p>이미지 경로</p>
-								${applicationScope.uploadedPath}
-								gpgp
-								${bean.image}
+								${applicationScope.uploadedPath}/${bean.image}
 								<img src="${applicationScope.uploadedPath}/${bean.image}" class="img-rounded" alt="사과" width="200" height="200">		
 							</td>
 						</tr>
