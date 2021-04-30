@@ -14,14 +14,7 @@ public class MallOrderController extends SuperClass {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doGet(request, response);
 		
-		String id = request.getParameter("id") ;
-		int no = Integer.parseInt(request.getParameter("no")) ;
-		
-		MyCartList mycart = new MyCartList(); 
-		
-		request.setAttribute("bean", null);
-		
-		String gotopage = "/member/main.jsp" ;
+		String gotopage = "/mall/shopList.jsp" ;
 		super.GotoPage(gotopage);
 	}	
 	

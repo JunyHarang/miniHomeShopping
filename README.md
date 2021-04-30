@@ -408,3 +408,31 @@ session 영역에 수정된 카트(mycart)를 다시 바인딩하게 만들 것�
 ### * 오늘의 참고 사항 *<br><br>
 
 현재 문제 사항 : 상품 상세 보기에서 사진이 나오지 않는 문제<br>
+
+#####테스트 시나리오<br><br>
+**프로그램 구동 중에는 하면 안됩니다**
+
+-- 테스트 시나리오를 위한 Data 초기화
+
+~~~
+update members set mpoint = 0 where id = 'yusin';
+update products set stock = 100 where num in(1, 2, 3);
+update products set stock = 10 where num in(1);
+update products set stock = 20 where num in(2);
+update products set stock = 30 where num in(3);
+
+delete from orders;
+delete from orderdetails;
+
+commit;
+
+~~~
+
+** 최종 확인 **<br><br>
+
+~~~
+select id, name, mpoint, from members where id = 'yusin';
+select num, name, stock from products where num in (1, 2, 3);
+select * from orders;
+select * from orderdetails;
+~~~
