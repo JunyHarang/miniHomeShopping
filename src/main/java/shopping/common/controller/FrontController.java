@@ -91,7 +91,7 @@ public class FrontController extends HttpServlet {//implements SuperController{
 		
 		ServletContext application = getServletContext();	
 		
-		String uploadedPath = application.getRealPath("upload") ; //실제 업로드될 웹서버 경로
+		String uploadedPath = application.getRealPath("/upload") ; //실제 업로드될 웹서버 경로
 		
 		System.out.println( "uploadedPath : " + uploadedPath );
 		

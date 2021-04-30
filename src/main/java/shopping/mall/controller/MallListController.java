@@ -1,7 +1,11 @@
 package shopping.mall.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,8 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import shopping.common.controller.SuperClass;
 import shopping.common.model.MyCartList;
+import shopping.common.model.ShoppingInfo;
 import shopping.member.controller.MemberLoginController;
 import shopping.product.controller.ProductListController;
+import shopping.product.model.Product;
+import shopping.product.model.ProductDao;
 
 public class MallListController extends SuperClass {
 	@Override
@@ -45,6 +52,50 @@ public class MallListController extends SuperClass {
 				
 				/* 카트 정상 작동 여부 확인을 위해 출력 */
 				System.out.println("cart에 담긴 내용 크기 : " + maplists.size());
+				
+				Set<Integer> keylist = maplists.keySet();
+				
+				List<ShoppingInfo> shoplists = new ArrayList<ShoppingInfo>();
+				
+				// 총 금액
+				int totalAmount = 0;
+				
+				// 총 누적 포인트
+				int totalPoint = 0;
+				
+				for(Integer pnum : keylist) {
+					// pnum은 상품 번호
+					
+					int qty = maplists.get(pnum);
+					
+					ProductDao dao = new ProductDao();
+					Product bean = dao.SelectDataByPk(pnum);
+					
+					// shopInfo: 상품 1개에 대한 정보를 저장하기 위한 Class
+					ShoppingInfo shopInfo = new ShoppingInfo();
+					
+					int point = bean.getPoint();
+					int price = bean.getPrice();
+					
+					totalAmount += qty * price;
+					totalPoint += qty * point;
+					
+					shopInfo.setImage(bean.getImage());
+					shopInfo.setPname(bean.getName());
+					shopInfo.setPnum(pnum);
+					shopInfo.setPoint(point);
+					shopInfo.setPrice(price);
+					shopInfo.setQty(qty);
+					
+					shoplists.add(shopInfo);
+				}
+				
+				super.session.setAttribute("totalAmount", totalAmount);
+				super.session.setAttribute("totalPoint", totalPoint);
+				super.session.setAttribute("shoplists", shoplists);
+				
+				String gotopage = "/mall/mallList.jsp" ;
+				super.GotoPage(gotopage);
 			}
 		}
 		

@@ -32,7 +32,7 @@
 							<td>
 								<p>이미지 경로</p>
 								${applicationScope.uploadedPath}/${bean.image}
-								<img src="${applicationScope.uploadedPath}/${bean.image}" class="img-rounded" alt="사과" width="200" height="200">		
+								<img src="${applicationScope.uploadedPath}/${shopinfo.image}" class="img-rounded" alt="사과" width="200" height="200">		
 							</td>
 						</tr>
 					</table>

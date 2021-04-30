@@ -41,7 +41,7 @@
 				    <div class="form-group">
 						<label class="control-label col-sm-<%=formleft%>" for="password">비밀 번호</label>
 				      	<div class="col-sm-<%=formright%>">          
-				        	<input type="password" class="form-control" id="password" placeholder="비밀 번호를 넣어 주세요." name="password" value="${password}">
+				        	<input pattern="[A-Za-z0-9]+" type="password" class="form-control" id="password" placeholder="비밀 번호를 넣어 주세요." name="password" value="${password}">
 				      		
 				      		<span class="form-control-static err">
 				        			${errpassword}
