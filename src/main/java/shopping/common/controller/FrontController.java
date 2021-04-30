@@ -23,7 +23,7 @@ import shopping.utility.Myutility;
 @WebServlet(
 		urlPatterns = { "/Shopping" }, 
 		initParams = { 
-				@WebInitParam(name = "configFile", value = "/WEB-INF/todolist.txt")
+				@WebInitParam(name = "configFile", value = "/WEB-INF/todolist.md")
 		})
 public class FrontController extends HttpServlet {//implements SuperController{
 	private static final long serialVersionUID = 1L;
@@ -88,14 +88,20 @@ public class FrontController extends HttpServlet {//implements SuperController{
 		//request 객체를 직접 이용하지 못한다.
 		//파라미터 command를 챙긴다.
 		String command = request.getParameter("command");		
-		ServletContext context = getServletContext();			
+		
+		ServletContext application = getServletContext();	
+		
+		String uploadedPath = application.getRealPath("upload") ; //실제 업로드될 웹서버 경로
+		
+		System.out.println( "uploadedPath : " + uploadedPath );
+		
+		application.setAttribute("uploadedPath", uploadedPath);
+		
 		if( command == null ){ //파일 업로드를 위한 케이스이다.
 			System.out.println("파일 업로드를 수행합니다.");
-			String uploadedPath = context.getRealPath("/upload") ; //실제 업로드될 웹서버 경로
-			System.out.println( "uploadedPath : " + uploadedPath );
-			
 			//그래서, 파일 업로드를 위한 MultipartRequest 객체를 구해주는 메소드를 호출한다.
 			MultipartRequest multi = Myutility.getMultiPartRequest(request, uploadedPath) ;
+		
 			if( multi != null ){ //MultipartRequest 객체가 구해지면
 				command = multi.getParameter("command") ;
 				request.setAttribute("multi", multi ); //request에 바인딩
@@ -116,7 +122,7 @@ public class FrontController extends HttpServlet {//implements SuperController{
 				controller.doPost( request, response ); //해당 doProcess() 메소드를 호출한다.
 			}
 		}else{
-			System.out.println( command + "는 존재하지 않는군요.");
+			System.out.println( command + "는 존재하지 않습니다.");
 		}
 	}	
 	protected void doGet(HttpServletRequest request,

@@ -3,6 +3,9 @@ public class Product {
 	private int num ;	
 	private String name ;
 	private String company ;
+	
+	/* image 컬럼에 Upload할 내용들에 대한 변수 선언 */
+	
 	private String image ;
 	private int stock ;
 	private int price ;

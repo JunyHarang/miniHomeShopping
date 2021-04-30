@@ -17,20 +17,25 @@ public class ProductDetailViewController extends SuperClass {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doGet(request, response);
 		
-		Product bean = null ;
+		int num = Integer.parseInt(request.getParameter("num")) ;
+		
 		ProductDao dao = new ProductDao();
-		String data = dao.toString() ;
 		
-		String id = request.getParameter("id") ;
-		int no = Integer.parseInt(request.getParameter("no")) ;
+		Product bean = dao.SelectDataByPk(num);
 		
-		List<Product> lists = new ArrayList<Product>() ;
+		if ( bean == null ) {
+			new ProductListController().doGet(request, response);
+			
+		} else {
+			request.setAttribute("bean", bean);
+			
+			String gotopage = "/product/prDetailView.jsp" ;
+			super.GotoPage(gotopage);
+		}
 		
-		request.setAttribute("bean", bean);
 		
-		String gotopage = "/product/main.jsp" ;
-		super.GotoPage(gotopage);
 	}	
+	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doPost(request, response);
