@@ -207,8 +207,8 @@ public class MallDao extends SuperDao {
 			if ( this.conn == null) {
 				this.conn = this.getConnection();
 			}
-			
-	
+			pstmt = super.conn.prepareStatement(sql);
+			pstmt.setInt(1, oid);
 			
 			rs = pstmt.executeQuery();
 			

@@ -37,19 +37,107 @@
 						</thead>
 						
 						<tbody>
+							<c:set var="totalAmount" value="0" />
+							
 							<c:forEach var="shopinfo" items="${requestScope.lists}">
+							
 								<tr>
 									<td class="text-center">${shopinfo.pname}</td>
 									
-									<td class="text-center">${shopinfo.image}</td>
+									<td class="text-center">
+										<img alt="${shopinfo.image}" width="45" height="45" src="${applicationScope.uploadedPath}/${shopinfo.image}">	
+									</td>
 									
-									<td class="text-center">${shopinfo.price}</td>
+									<td class="text-center">
+										<fmt:formatNumber value="${shopinfo.price}" pattern="###,###" /> 원	
+									</td>
 									
-									<td class="text-center">${shopinfo.qty}</td>
+									<td class="text-center">
+										<fmt:formatNumber value="${shopinfo.qty}" pattern="###,###" /> 원	
+									</td>
 									
-									<td class="text-center">${shopinfo.qty}</td>
+									<td class="text-center">
+										<c:set var="amount" value="${shopinfo.price * shopinfo.qty}" />
+										
+										<c:set var="totalAmount" value="${totalAmount + amount}" />
+										
+										<fmt:formatNumber value="${amount}" pattern="###,###" /> 원	
+									</td>
+									
 								</tr>
 							</c:forEach>
+							
+							<tr>
+								<td class="thick-line"></td>
+								
+								<td class="thick-line"></td>
+								
+								<td class="thick-line"></td>
+								
+								<td class="thick-line text-center">
+									<strong>합계</strong>
+								</td>
+								
+								<td class="thick-line text-right">
+									<strong>
+										<fmt:formatNumber value="${totalAmount}" pattern="###,###" /> 원
+									</strong>
+								</td>
+							</tr>
+							
+							<%-- 요금에 따른 운송비 구하기  --%>
+							<c:set var="deliveryExpense" value="0"/>
+							<c:choose>
+								<c:when test="${totalAmount >= 100000}">
+									<c:set var="deliveryExpense" value="0"/>
+								</c:when>
+								
+								<c:when test="${totalAmount >= 50000}">
+									<c:set var="deliveryExpense" value="2000"/>
+								</c:when>
+								
+								<c:otherwise>
+									<c:set var="deliveryExpense" value="4000"/>
+								</c:otherwise>								
+							</c:choose>
+							
+							<tr>
+								<td class="no-line"></td>
+								
+								<td class="no-line"></td>
+								
+								<td class="no-line"></td>
+								
+								<td class="no-line text-center">
+									<strong>
+										운송비
+									</strong>
+								</td>
+								
+								<td class="no-line text-right">
+									<fmt:formatNumber value="${deliveryExpense}" pattern="###,###" /> 원
+								</td>
+							</tr>
+							
+							<tr>
+								<td class="no-line"></td>
+								
+								<td class="no-line"></td>
+								
+								<td class="no-line"></td>
+								
+								<td class="no-line text-center">
+									<strong>
+										최종금액
+									</strong>
+								</td>
+								
+								<td class="no-line text-right">
+									<c:set var="finalAmount" value="${totalAmount + deliveryExpense}" />								
+									<fmt:formatNumber value="${finalAmount}" pattern="###,###" /> 원
+								</td>
+							</tr>
+							
 						</tbody>
 					</table>
 				</div>
@@ -60,10 +148,43 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">결제 정보</h3>
 			</div>
+			
 			<div class="panel-body">
 				<div class="table-responsive">
 					<table class="table table-bordered">
-						표 그리기
+						<tbody>
+							<tr>
+								<td class="text-center gr">주문 번호</td>
+								<td>${order.oid}</td>
+								
+								<td class="text-center gr">주문 날짜</td>
+								<td>${order.orderdate}</td>
+							</tr>
+							
+							<tr>
+								<td class="text-center gr">주문 총액</td>
+								<td>
+									<fmt:formatNumber value="${finalAmount}" pattern="###,###" /> 원
+								</td>
+								
+								<td class="text-center gr">할인 금액</td>
+								<td>
+									<c:set var="discount" value="0" />${discount} 원
+								</td>
+							</tr>
+							
+							<tr>
+								<td class="text-center gr">결제 금액</td>
+								<td></td>
+								
+								<td class="text-center gr">결제 상태</td>
+								<td>
+									<strong>
+										결제 완료
+									</strong>
+								</td>
+							</tr>
+						</tbody>
 					</table>
 				</div>
 			</div>
@@ -78,8 +199,57 @@
 					<table class="table table-bordered">
 						<tbody>
 							<tr>
-								<td class="text-center gr"></td>
-								<td></td>
+								<td class="text-center gr">
+									<strong>
+										받으시는 분
+									</strong>
+								</td>
+								
+								<td>${sessionScope.loginfo.name}(${sessionScope.loginfo.id})님</td>
+							</tr>
+							
+							<tr>
+								<td class="text-center gr">
+									<strong>
+										우편번호
+									</strong>
+								</td>
+								
+								<td>${sessionScope.loginfo.zipcode}</td>
+							</tr>
+							
+							<tr>
+								<td class="text-center gr">
+									<strong>
+										주소
+									</strong>
+								</td>
+								
+								<td>
+									${sessionScope.loginfo.address1}&nbsp;${sessionScope.loginfo.address2}
+								</td>
+							</tr>
+							
+							<tr>
+								<td class="text-center gr">
+									<strong>
+										적립 포인트
+									</strong>
+								</td>
+								
+								<td>
+									<fmt:formatNumber value="${sessionScope.loginfo.mpoint}" pattern="###,###" /> 원
+								</td>
+							</tr>
+							
+							<tr>
+								<td class="text-center gr">
+									<strong>
+										배송 방법
+									</strong>
+								</td>
+								
+								<td>택배</td>
 							</tr>							
 						</tbody>
 					</table>
