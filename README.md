@@ -432,7 +432,18 @@ commit;
 
 ~~~
 select id, name, mpoint, from members where id = 'yusin';
-select num, name, stock from products where num in (1, 2, 3);
+select num, name, stock, point from products where num in (1, 2, 3);
 select * from orders;
 select * from orderdetails;
 ~~~
+
+##### ● 결재 내역<br><br>
+김유신 회원님이 상품 1번 10개, 2번 30개, 3번 40개를 구매할 것이에요.<br><br>
+
+적립 포인트: 10 x 10 + 20 x 30 + 30 * 40 = 1900<br>
+상품 재고는 상품 1번 90개, 2번 70개, 3번 60개가 남을 것이에요.<br>
+이것이 결과값으로 나올지 테스트 해보도록 하겠습니다아!<br>
+
+
+## 2021년 05월 01일 작업 내용<br><br><br>
+

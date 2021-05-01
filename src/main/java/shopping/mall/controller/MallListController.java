@@ -63,8 +63,9 @@ public class MallListController extends SuperClass {
 				// 총 누적 포인트
 				int totalPoint = 0;
 				
+				// pnum은 상품 번호
 				for(Integer pnum : keylist) {
-					// pnum은 상품 번호
+					
 					
 					int qty = maplists.get(pnum);
 					
@@ -99,15 +100,16 @@ public class MallListController extends SuperClass {
 			}
 		}
 		
-		String id = request.getParameter("id") ;
-		int no = Integer.parseInt(request.getParameter("no")) ;
-		
-		MyCartList mycart = new MyCartList(); 
-		
-		request.setAttribute("bean", null);
-		
-		String gotopage = "/member/main.jsp" ;
-		super.GotoPage(gotopage);
+//		String id = request.getParameter("id") ;
+//		
+//		int no = Integer.parseInt(request.getParameter("no")) ;
+
+//		MyCartList mycart = new MyCartList(); 
+//		
+//		request.setAttribute("bean", null);
+//		
+//		String gotopage = "/mall/mallList.jsp" ;
+//		super.GotoPage(gotopage);
 	}	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

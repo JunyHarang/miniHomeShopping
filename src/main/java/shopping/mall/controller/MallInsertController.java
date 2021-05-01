@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import shopping.common.controller.SuperClass;
 import shopping.common.model.MyCartList;
+import shopping.product.controller.ProductDetailViewController;
 import shopping.product.controller.ProductListController;
 
 public class MallInsertController extends SuperClass {
@@ -30,7 +31,7 @@ public class MallInsertController extends SuperClass {
 				if (stock < qty) {
 					String message = "재고가 부족 합니다!";
 					super.setErrorMessage(message);
-					new ProductListController().doGet(request, response);
+					new ProductDetailViewController().doGet(request, response);
 					
 				} else {
 					MyCartList mycart = (MyCartList)session.getAttribute("mycart");
