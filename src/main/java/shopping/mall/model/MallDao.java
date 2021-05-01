@@ -163,9 +163,14 @@ public class MallDao extends SuperDao {
 					Order bean = new Order();
 					
 					bean.setMid(rs.getString("mid"));
+					
 					bean.setOid(rs.getInt("oid"));
+					
 					bean.setOrderdate(rs.getString("orderdate"));
+					
+					/* 시간 제외하고, 일자만 출력하고 싶을 때 사용 */
 //					bean.setOrderdate(String.valueOf(rs.getString("orderdate")));
+					
 					bean.setRemark(rs.getString("remark"));
 				
 					lists.add(bean);
@@ -189,5 +194,67 @@ public class MallDao extends SuperDao {
 		return lists;
 		
 	} // OrderMall 끝
+
+	public Order selectDataByPK(int oid) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = " select * from orders where oid = ? " ;
+		Order bean = null;
+		
+		try {
+			if ( this.conn == null) {
+				this.conn = this.getConnection();
+			}
+			
+	
+			
+			rs = pstmt.executeQuery();
+			
+			if ( rs.next() ) {
+				bean = new Order();
+				
+				pstmt.setInt( 1, oid );
+				
+				bean.setMid(rs.getString("mid"));
+				
+				bean.setOid(rs.getInt("oid"));
+				
+				bean.setOrderdate(rs.getString("orderdate"));
+				
+				/* 시간 제외하고, 일자만 출력하고 싶을 때 사용 */
+//				bean.setOrderdate(String.valueOf(rs.getString("orderdate")));
+				
+				bean.setRemark(rs.getString("remark"));
+			
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			
+			
+		} finally {
+			
+			
+			
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			} // try-catch 끝
+			
+		}  // finally 끝
+		
+		return bean;
+	} // selectDataByPK 끝
 
 } // class 끝

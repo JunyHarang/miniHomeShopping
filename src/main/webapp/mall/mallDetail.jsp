@@ -11,10 +11,11 @@
 </head>
 <body>
 	<div class="container col-md-offset-<%=offset%> col-md-<%=content%>">
-		<h1>주문 상세 내역</h1>
+		<h1>${sessionScope.loginfo.name}(${sessionScope.loginfo.id})주문 상세 내역</h1>
 		<hr>
-		<p>고객님께서 구매하신 상품에 대한 상세 결제
-			내역입니다.
+		<p>
+			${sessionScope.loginfo.name} 고객님께서 
+			<strong>${order.orderdate}</strong> 구매하신 상품에 대한 상세 결제 내역입니다. 
 		</p>
 		<hr>
 
@@ -34,8 +35,21 @@
 								<th class="text-center">금액</th>
 							</tr>
 						</thead>
+						
 						<tbody>
-
+							<c:forEach var="shopinfo" items="${requestScope.lists}">
+								<tr>
+									<td class="text-center">${shopinfo.pname}</td>
+									
+									<td class="text-center">${shopinfo.image}</td>
+									
+									<td class="text-center">${shopinfo.price}</td>
+									
+									<td class="text-center">${shopinfo.qty}</td>
+									
+									<td class="text-center">${shopinfo.qty}</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
