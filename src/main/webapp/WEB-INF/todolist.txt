@@ -1,8 +1,8 @@
-# Main Section
+#Main Section
 main=shopping.common.controller.MainController
 hello=shopping.common.controller.HelloController
 world=shopping.common.controller.WorldController
-### Member Section ######################################################
+#Member Section
 meLogin=shopping.member.controller.MemberLoginController
 meList=shopping.member.controller.MemberListController
 meInsert=shopping.member.controller.MemberInsertController
@@ -12,27 +12,33 @@ meZipcheck=shopping.member.controller.MemberZipcheckController
 meDetailView=shopping.member.controller.MemberDetailViewController
 meUpdate=shopping.member.controller.MemberUpdateController
 meDelete=shopping.member.controller.MemberDeleteController
-### Board Section ######################################################
+#Board Section 
 boList=shopping.board.controller.BoardListController
 boInsert=shopping.board.controller.BoardInsertController
 boDetailView=shopping.board.controller.BoardDetailViewController
 boDelete=shopping.board.controller.BoardDeleteController
 boUpdate=shopping.board.controller.BoardUpdateController
 boReply=shopping.board.controller.BoardReplyController
-### Product Section ######################################################
+#Product Section
 prList=shopping.product.controller.ProductListController
 prDetailView=shopping.product.controller.ProductDetailViewController
 prInsert=shopping.product.controller.ProductInsertController
 prDelete=shopping.product.controller.ProductDeleteController
 prUpdate=shopping.product.controller.ProductUpdateController
-### Mall Section ######################################################
+#Mall Section
 mallInsert=shopping.mall.controller.MallInsertController
 mallList=shopping.mall.controller.MallListController
 mallCalculate=shopping.mall.controller.MallCalculateController
 mallDelete=shopping.mall.controller.MallDeleteController
 mallOrder=shopping.mall.controller.MallOrderController
 mallDetail=shopping.mall.controller.MallDetailController
-### Comment Section ######################################################
+#Comment Section
 list.com=shopping.comment.controller.CommentListController
 insert.com=shopping.comment.controller.CommentInsertController
 delete.com=shopping.comment.controller.CommentDeleteController
+# Join Section
+viewExam01=shopping.composite.controller.View01Controller
+#viewExam02=shopping.composite.controller.View02Controller
+#viewExam03=shopping.composite.controller.View03Controller
+#viewExam04=shopping.composite.controller.View04Controller
+#viewExam05=shopping.composite.controller.View05Controller

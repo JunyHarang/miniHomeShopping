@@ -23,7 +23,7 @@ import shopping.utility.Myutility;
 @WebServlet(
 		urlPatterns = { "/Shopping" }, 
 		initParams = { 
-				@WebInitParam(name = "configFile", value = "/WEB-INF/todolist.md")
+				@WebInitParam(name = "configFile", value = "/WEB-INF/todolist.txt")
 		})
 public class FrontController extends HttpServlet {//implements SuperController{
 	private static final long serialVersionUID = 1L;

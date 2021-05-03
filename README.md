@@ -349,7 +349,7 @@ Controller에서 Dao를 통하여 해당 groupno와 동일한 값을 가지는 �
 
 
 ## 2021년 04월 29일 작업 내용<br>
-##게시물 답글 달기<br>
+**게시물 답글 달기**<br>
 
 ---
 
@@ -389,9 +389,9 @@ WebContent\WEB-INF\lib\cos.jar 파일이 존재해야 합니다.<br><br>
 
 
 ## 2021년 04월 30일 작업 내용<br>
-**게시물 상세보기**
+**게시물 상세보기**<br><br>
 
-#### 쇼핑몰 관련
+#### 쇼핑몰 관련<br><br>
 shopping.common.model.MyCartList<br>
 &nbsp;&nbsp;사이트 안에 카트 개념을 위한 Utility Class 입니다. 
 
@@ -405,8 +405,8 @@ shoplists: session에 들어 있는 쇼핑 내역을 담고 있는 List 컬렉�
 
 mycart:session에 들어 있는 회원의 장바구니 이름이 들어 있는 변수<br><br><br>
 
-#### 장바구니 목록 삭제<br><br>
 
+#### 장바구니 목록 삭제<br><br>
 
 장바구니에 담긴 물건 목록을 삭제 시 카트(mycart)에서 해당 목록을 삭제하게 만들 것 이에요.<br>
 session 영역에 수정된 카트(mycart)를 다시 바인딩하게 만들 것이에요.<br>
@@ -500,6 +500,13 @@ create table shoppinginfos (
 );
 ~~~
 
+#####회원과 게시물 조인<br><br>
+~~~
+select m.name, b.subject, b.content, b.regdate
+from members m inner join boards b
+on m.id = b.writer;
+~~~
+
 ### 오늘의 테스트 시나리오<br><br>
 
 ~~~
@@ -540,3 +547,43 @@ order by mid asc, pnum desc;
 3)Logout을 합니다.<br>
 4)Table에서 '김유신', '김구'님들의 상품 목록이 존재하는지 확인할 것이에요.<br><br><br>
 
+#####로그인했을 때<br><br>
+
+View01<br>
+회원과 게시물 조인<br><br>
+
+~~~
+select m.name, b.subject, b.content, b.regdate from members m inner join boards b on m.id = b.writer;
+~~~
+<br><br>
+
+View02<br><br>
+
+~~~
+select m.name, count(*) as cnt 
+from members m inner join boards b 
+on m.id = b.writer
+group by m.name
+order by m.name desc;
+~~~
+<br><br>
+
+View03<br>
+
+~~~
+select m.name mname, p.name pname, od.qty, p.price, p.price * od.qty as amount
+from ((members m inner join orders o
+on m.id = o.mid)
+inner join orderdetails od
+on o.oid = od.oid)
+inner join products p
+on od.pnum = p.num
+order by p.name desc, m.name asc;
+~~~
+<br><br>
+
+View04<br>
+View05<br>
+
+#### 오늘의 참고 사항<br><br>
+각 회원이 상품 주문을 하면 shoppinginfos에 내용이 담겨야 하는데, 담기지 않는다. 그런데, 문제는 페이지에서는 장바구니 처럼 보여지며, 어디에 데이터가 가는지 모르겠다. 그리고, A 회원의 장바구니 내용이 로그아웃 뒤 다른 B 회원으로 로그인해서 보면 A 회원의 장바구니가 보여진다.<br><br><br>

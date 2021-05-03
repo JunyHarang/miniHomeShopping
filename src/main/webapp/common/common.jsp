@@ -81,7 +81,7 @@
 					</li>
 				
 					<li class="active">
-						<a href="<%=contextPath%>/main.jsp">Home</a>
+						<a href="<%=contextPath%>/common/main.jsp">Home</a>
 					</li>
 					
 					<li class="dropdown">
@@ -153,7 +153,7 @@
 					</li>
 					
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Data 보기<b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">관리자 페이지<br>Data 보기<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 						
 							<li>
