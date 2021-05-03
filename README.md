@@ -445,5 +445,28 @@ select * from orderdetails;
 이것이 결과값으로 나올지 테스트 해보도록 하겠습니다아!<br>
 
 
-## 2021년 05월 01일 작업 내용<br><br><br>
+## 2021년 05월 03일 작업 내용<br><br>
 
+Logout할 때, 나의 장바구니 정보 임시 테이블에 담기<br><br>
+
+&nbsp;&nbsp;장바구니 정보(mycart)를 읽어 오게 만들 것이에요!<br>
+&nbsp;&nbsp;mycart가 null이 아니면 해당 정보를 shoppinginfos Table에 추가할 것이에요!<br>
+
+Login하면 임시 테이블의 장바구니 정보 읽어 오기<br><br>
+
+
+&nbsp;&nbsp; 3일 이전 데이터는 자동으로 삭제되게 구현할 것이에요!<br><br>
+shoppinginfos 테이블 생성<br><br><br>
+
+~~~
+create table shoppinginfos (
+    mid varchar2(255),
+    pnum number,
+    pname varchar2(255),
+    qty number,
+    price number,
+    image varchar2(255),
+    point number,
+    inputdate date default sysdate
+);
+~~~
