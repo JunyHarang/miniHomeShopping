@@ -1,6 +1,7 @@
 package shopping.member.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import shopping.common.controller.MainController;
 import shopping.common.controller.SuperClass;
+import shopping.common.model.MyCartList;
+import shopping.common.model.ShoppingInfo;
+import shopping.mall.model.MallDao;
 import shopping.member.model.Member;
 import shopping.member.model.MemberDao;
 
@@ -81,6 +85,21 @@ public class MemberLoginController extends SuperClass {
 			  
 			  // 장바구니 테이블에 들어 있는 나의 쇼핑 정보가 있으면 
 			  // Session 영역에 mycart라는 이름으로 바인딩함.
+			  MallDao mdao = new MallDao();
+			  
+			  List<ShoppingInfo> lists = mdao.GetshoppingInfo(bean.getId());
+			  
+			  if ( lists.size() > 0 ) {
+				  MyCartList mycart = new MyCartList();
+				  
+				  // insert mycart for statement
+				  for ( ShoppingInfo shop : lists ) {
+					  mycart.AddOrder(shop.getPnum(), shop.getQty());
+				  }
+				  
+				  super.session.setAttribute("mycart", mycart);
+				  
+			  }
 			  
 			  //Main Page로 이동
 			  new MainController().doGet(request, response);

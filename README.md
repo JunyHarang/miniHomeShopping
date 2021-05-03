@@ -3,50 +3,64 @@
 ### 본 내용은 설진욱(ugcadman@naver.com)강사(님)의 강의를 토대로 작업 중 입니다.
 본 내용에 대한 저작권 등에 대한 문의는 위의 강사(님)에게 부탁 드립니다.
 
-2021년 04월 22일 작업  내용
+### 시스템 구성
 
-사용자 프로맨 생성
-프로맨 접속 아이콘 생성
-프로맨 위한 테이블 생성
-우편 번호 테이블 생성 및 벌크 로딩
-WEB-INF/lib/*.jar 파일 쫀쨰 여부 확인
-WEB-INF/todolist.txt 파일 확인
-최초 시작 파일 : start.jsp
+**1. Server OS**<br><br>
+Linux ubuntu 20.04 LTS<br><br>
 
-common.jsp : 모든 문서에서 공통적으로 사용되는 내용을 기록한 파일
-twelve : 그리드 시스템의 100%를 의미하는 숫자 (12)
-JSTL 태그 라이브러리
-loginfo 속성은 로그인 한 사람의 member 객체 정보, session 영역에 바인딩 되어 있다.
-whologin은 현재 로그인 상태 저장 변수
+**2. DB / 언어**<br><br>
+1) Oracle 11g XE<br>
+2) Java / JSP / JQery / SQL<br><br>
+
+**3. 사용 툴**<br><br>
+1) Eclipse<br>
+2) Git<br>
+3) Synology OpenVPN<br>
+4) Oracle SQL Developer<br>
+5) DBeaver<br><br><br>
+
+
+2021년 04월 22일 작업  내용<br><br>
+
+사용자 프로맨 생성<br>
+프로맨 접속 아이콘 생성<br>
+프로맨 위한 테이블 생성<br>
+우편 번호 테이블 생성 및 벌크 로딩<br>
+WEB-INF/lib/*.jar 파일 쫀쨰 여부 확인<br>
+WEB-INF/todolist.txt 파일 확인<br>
+최초 시작 파일 : start.jsp<br><br>
+
+common.jsp : 모든 문서에서 공통적으로 사용되는 내용을 기록한 파일<br>
+twelve : 그리드 시스템의 100%를 의미하는 숫자 (12)<br>
+JSTL 태그 라이브러리<br>
+loginfo 속성은 로그인 한 사람의 member 객체 정보, session 영역에 바인딩 되어 있다.<br>
+whologin은 현재 로그인 상태 저장 변수<br>
 whologin은 미로그인(0), 일반 로그인(1), 관리자 로그인(2)로 설정
-						- 관리자는 아이디가 'admin'이다.
-						
-contextpath : 현재 진행중인 프로젝트(컨텍스트)의 이름
-mappingName: 요청에 응답하는 uri pattern 이름
-YesForm : 폼 태그에서 사용할 공용 변수
-NoForm : 폼이 없을 때 사용할 공용 변수
+&nbsp;- 관리자는 아이디가 'admin'이다.
+<br><br>						
+contextpath : 현재 진행중인 프로젝트(컨텍스트)의 이름<br>
+mappingName: 요청에 응답하는 uri pattern 이름<br>
+YesForm : 폼 태그에서 사용할 공용 변수<br>
+NoForm : 폼이 없을 때 사용할 공용 변수<br><br>
 
-부트 스트랩 관련 파일 링크 
+부트 스트랩 관련 파일 링크<br><br> 
 
-네비게이션 바 만들기
+네비게이션 바 만들기<br><br>
 
-아래 내용은 실제 프로젝트 시 액셀과 같은 걸로 표로 미리 만들어 본 뒤 작업할 것!
+아래 내용은 실제 프로젝트 시 액셀과 같은 걸로 표로 미리 만들어 본 뒤 작업할 것!<br><br>
 
 -- 계시판 필요 기능 --
 
-									     비회원	      				               일반회원					            관리자
-
-============================================================================================================
-
-계시물 등록                              X                          O                        O
-계시물 수정								X								O							 O
-계시물 삭제								X								O							 O
-계시물 목록 보기							O								O							 O
-계시물 상세 보기							X								O							 O
-계시물 댓글 달기							X								O							 O
-
-
-게시물 수정, 삭제, 상세 보기, 답글 작성은 풀다운 메뉴가 아니고, 목록 보기 페이지에서 구현하겠다.
+|비회원|일반회원|관리자|
+| ----- | ----- | ----- |
+계시물 등록 | X | O | O |
+계시물 수정 | X	| O	| O |
+계시물 삭제 | X	| O | O |
+계시물 목록 보기 | O	| O | O |
+계시물 상세 보기 | X | O | O |
+계시물 댓글 달기 | X | O | O |
+<br><br>
+게시물 수정, 삭제, 상세 보기, 답글 작성은 풀다운 메뉴가 아니고, 목록 보기 페이지에서 구현할 것이에요.<br><br><br>
 
 -- 상품 필요 기능 --
 
@@ -450,13 +464,28 @@ select * from orderdetails;
 Logout할 때, 나의 장바구니 정보 임시 테이블에 담기<br><br>
 
 &nbsp;&nbsp;장바구니 정보(mycart)를 읽어 오게 만들 것이에요!<br>
-&nbsp;&nbsp;mycart가 null이 아니면 해당 정보를 shoppinginfos Table에 추가할 것이에요!<br>
+&nbsp;&nbsp;mycart가 null이 아니면 해당 정보를 shoppinginfos Table에 추가할 것이에요!<br><br>
+
+#####로그인했을 때
+임시(shoppinginfos Table)테이블에서 장바구니 정보를 읽어 들일 것이에요!<br><br>
+
+반복문을 사용하여 카트에 데이터를 추가합니다!<br><br>
+
+세션 영역에 바인딩 합니다~<br><br>
+
+게시물 목록 페이지로 이동하게 만들 것이에요!<br><br><br>
+
 
 Login하면 임시 테이블의 장바구니 정보 읽어 오기<br><br>
 
+#####로그인했을 때<br>
+장바구니 (mycart)를 읽어 올 것이에요.
+mycart가 null이 아니면 혹시 남아 있을 이전 정보를 삭제 할 것이에요.<br>
+해당 정보를 임시(shoppinginfos) Table에 추가할 것이에요.<br><br><br>
 
-&nbsp;&nbsp; 3일 이전 데이터는 자동으로 삭제되게 구현할 것이에요!<br><br>
-shoppinginfos 테이블 생성<br><br><br>
+DB에 shoppinginfos Table 생성<br><br>
+
+---
 
 ~~~
 create table shoppinginfos (
@@ -470,3 +499,44 @@ create table shoppinginfos (
     inputdate date default sysdate
 );
 ~~~
+
+### 오늘의 테스트 시나리오<br><br>
+
+~~~
+delete from shoppinginfos;
+commit;
+~~~
+<br><br>
+
+| ID | Name | Pwd |
+| ----- | ----- | ----- |
+| yusin | 김유신 | abc1234 |
+| kim9 | 김구 | abc1234 | 
+<br><br>
+
+####1번 시나리오<br><br>
+1)'김유신'님이 Login<br>
+2)상품 1번 10개와 2번 10개 장바구니에 담습니다.<br>
+3)Logout을 합니다.<br>
+4)Table에서 '김유신'님의 상품 정보를 확인할 것이에요.<br>
+
+~~~
+select * from shoppinginfos
+order by mid asc, pnum desc;
+~~~
+<br><br>
+
+해당 Table은 한 회원의 소유 Table이 아니기 때문에 위와 같이 검색하는 것이에요.<br><br>
+
+1)'김유신'님이 다시 login합니다.<br>
+2)[장바구니 보기]에서 목록이 보이는지 확인할 것이에요.
+<br>
+3)다시 Logout 합니다.<br><br>
+
+####2번 시나리오<br><br>
+
+1)'김구'님이 Login<br>
+2)상품 3번 5개와 4번 5개를 장바구니에 담습니다.<br>
+3)Logout을 합니다.<br>
+4)Table에서 '김유신', '김구'님들의 상품 목록이 존재하는지 확인할 것이에요.<br><br><br>
+

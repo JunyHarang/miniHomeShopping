@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import shopping.common.model.ShoppingInfo;
 import shopping.common.model.SuperDao;
 import shopping.member.model.Member;
 import shopping.product.controller.ProductDetailViewController;
@@ -260,7 +261,6 @@ public class MallDao extends SuperDao {
 	public void InsertCartData(Member mem, Map<Integer, Integer> maplist) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = " insert into shoppinginfos(mid, pnum, pname, qty, price, image, point, inputdate) values(?, ?, ?, ?, ?, ?, ?, default) ";
 		int cnt = - 1;
 		
 		try {
@@ -271,7 +271,24 @@ public class MallDao extends SuperDao {
 			conn.setAutoCommit(false);
 			
 			Set<Integer> keylist = maplist.keySet();
-			System.out.println("입력된 Cart Data keylist 크기는" + keylist.size() + " 입니다." );
+			System.out.println("입력된 Cart Data keylist 크기는 " + keylist.size() + " 입니다." );
+			
+			// 이전 내역 삭제 작업
+			String sql = " delete from shoppinginfos where mid = ? " ;
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, mem.getId());
+			
+			cnt = pstmt.executeUpdate();
+			
+			if (pstmt != null ) {
+				pstmt.close();
+			}
+			
+			
+			// 반복문을 사용하여 현재 장바구니 정보 저장
+			sql = " insert into shoppinginfos(mid, pnum, pname, qty, price, image, point, inputdate) values(?, ?, ?, ?, ?, ?, ?, default) ";
 			
 			for ( Integer pnum : keylist) {
 				
@@ -328,5 +345,54 @@ public class MallDao extends SuperDao {
 			} // finally 끝
 		}// try-catch 끝
 	} // InsertCartDate 끝
+
+	public List<ShoppingInfo> GetshoppingInfo(String id) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = " select * from shoppinginfos where mid = ? ";
+		
+		List<ShoppingInfo> lists = new ArrayList<ShoppingInfo>();
+		
+		try {
+			
+			if (this.conn == null) {
+				this.conn = this.getConnection();
+			} // if 끝
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, id);
+				
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					ShoppingInfo bean = new ShoppingInfo();
+					
+					bean.setImage(rs.getString("image"));
+					bean.setPname(rs.getString("pname"));
+					bean.setPnum(rs.getInt("pnum"));
+					bean.setPoint(rs.getInt("point"));
+					bean.setPrice(rs.getInt("price"));
+					bean.setQty(rs.getInt("qty"));
+					
+					lists.add(bean);
+				} // while 끝
+				
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			
+			try {
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			} // try-catch 끝
+			
+		} // finally(try-catch) 끝
+		
+		return lists;
+	} // GetshoppingInfo 끝
 
 } // class 끝
