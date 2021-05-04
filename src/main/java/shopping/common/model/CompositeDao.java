@@ -260,5 +260,43 @@ public class CompositeDao extends SuperDao{
 		return lists;
 	}
 	
+	public List<Combo02> View02() {
+		PreparedStatement pstmt = null ;
+		ResultSet rs = null ;
+		String sql = " select m.name, count(*) as cnt from members m inner join boards b on m.id = b.writer group by m.name order by m.name desc " ; 
+		
+		List<Combo02> lists = new ArrayList<Combo02>();
+		
+		try {
+			if( conn == null ){ super.conn = super.getConnection() ; }
+			pstmt = super.conn.prepareStatement(sql) ;			
+			rs = pstmt.executeQuery() ;
+			
+			while( rs.next() ){
+				Combo02 bean = new Combo02();
+				
+				bean.setName( rs.getString( "name" ) );
+				bean.setCnt( rs.getInt( "cnt" ) );
+				 
+				lists.add( bean ) ;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally{
+			
+			try {
+				if( rs != null ){ rs.close(); }
+				if( pstmt != null ){ pstmt.close(); }
+				super.closeConnection(); 
+				
+			} catch (Exception e2) {
+				e2.printStackTrace(); 
+			}
+		}	
+		return lists;
+	}
+	
 
 } // Class 끝
