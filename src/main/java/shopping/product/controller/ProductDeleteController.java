@@ -30,18 +30,8 @@ public class ProductDeleteController extends SuperClass {
 		
 		cnt = dao.DeleteData(num);
 
+		new ProductListController().doGet(request, response);
 		
-		Product bean = null ;
-		
-		String id = request.getParameter("id") ;
-		
-		
-		List<Product> lists = new ArrayList<Product>() ;
-		
-		request.setAttribute("bean", bean);
-		
-		String gotopage = "/product/main.jsp" ;
-		super.GotoPage(gotopage);
 	}	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

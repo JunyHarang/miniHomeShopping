@@ -114,11 +114,20 @@ public class ProductDao extends SuperDao {
 			
 			cnt = pstmt.executeUpdate() ;
 			
+			conn.commit();
+			
 			if ( pstmt != null ) {
 				pstmt.close();
 			}
 			
 			// 해당 상품 삭제
+			
+			if ( conn == null ) {
+				super.conn = super.getConnection();
+			}
+			
+			conn.setAutoCommit( false );
+			
 			sql = " delete from products where num = ? " ;
 						
 			pstmt = super.conn.prepareStatement(sql) ;
@@ -253,7 +262,7 @@ public class ProductDao extends SuperDao {
 			try {
 				if( rs != null){ rs.close(); } 
 				if( pstmt != null){ pstmt.close(); } 
-				this.closeConnection() ;
+				//this.closeConnection() ;
 				
 			} catch (Exception e2) {
 				e2.printStackTrace(); 
