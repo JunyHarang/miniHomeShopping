@@ -20,18 +20,18 @@
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
-						<th>이름</th>
-						<th>글 제목</th>
-						<th>글 내용</th>
-						<th>작성 일자</th>
+						<th>고객 이름</th>
+						<th>상품 이름</th>
+						<th>수량</th>
+						<th>가격</th>
 					</tr>
 				</thead>
 				<c:forEach var="bean" items="${requestScope.lists}">
 					<tr>
-						<td>${bean.name}</td>
-						<td>${bean.subject}</td>
-						<td>${bean.content}</td>
-						<td>${bean.regdate}</td>						
+						<td>${bean.mname}</td>
+						<td>${bean.pname}</td>
+						<td>${bean.qty}</td>
+						<td>${bean.price}</td>						
 					</tr>
 				</c:forEach>				
 			</table>

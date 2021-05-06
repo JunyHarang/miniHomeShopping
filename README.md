@@ -551,7 +551,7 @@ order by mid asc, pnum desc;
 
 커맨드 정의
 
-View01<br>
+#####View01<br>
 회원과 게시물 조인<br><br>
 
 ~~~
@@ -559,7 +559,7 @@ select m.name, b.subject, b.content, b.regdate from members m inner join boards 
 ~~~
 <br><br>
 
-View02<br><br>
+#####View02<br><br>
 
 ~~~
 select m.name, count(*) as cnt 
@@ -570,7 +570,7 @@ order by m.name desc;
 ~~~
 <br><br>
 
-View03<br>
+#####View03<br>
 
 ~~~
 select m.name mname, p.name pname, od.qty, p.price, p.price * od.qty as amount
@@ -589,7 +589,7 @@ order by p.name desc, m.name asc;
 
 ### 2021년 05월 04일 작업 내용<br><br>
 
-View04 고객별 매출 총액<br>
+#####View04 고객별 매출 총액<br>
 
 ~~~
 select m.id, sum(p.price * od.qty) as amount
@@ -603,7 +603,7 @@ group by m.id;
 ~~~
 <br><br>
 
-View05<br><br>
+#####View05<br><br>
 주문이 한 건도 없는 사람들도 조회하게 만들기!<br>
 inner join 말고, outer join사용!
 건수 = count 함수 사용!
@@ -614,3 +614,69 @@ from members m left outer join orders o
 on m.id = o.mid
 group by m.id;
 ~~~
+
+
+##### 회원 탈퇴하기<br><br>
+
+탈퇴한 회원이 남긴 게시물의 writer 컬럼을 null값으로 변경되도록 하겠습니다!<br>
+on delete set null Option 사용<br><br>
+
+탈퇴한 회원이 남긴 매출 테이블의 mid 컬럼을 null 값으로 변경되도록 테이블을 설계 하겠습니다!<br>
+on delete set null Option<br><br>
+
+게시물과 매출 테이블에 탈퇴한 내용을 비고(remark) 컬럼에 기록 해 두도록 할 것이에요.<br><br>
+
+회원 테이블에 해당 id를 삭제할 것이에요.<br>
+세션 정보도 모두 지웁니다.<br>
+그런 뒤 로그인 페이지로 이동하게 할 것이에요<br><br><br>
+
+
+### 오늘의 테스트 시나리오<br><br>
+
+~~~
+insert into members(id, name, password, gender, birth, marriage, salary, address1, manager)
+values('sim9', '싱형래', 'abc1234', '남자', '1990/12/25', '결혼', 220, '용산', null) ;
+<br><br>
+insert into boards 
+values(myboard.nextval, 'jsp어려워', 'sim9', '1234', '정말 어려워요', default, default, default, default, default, default);
+<br><br>
+
+insert into orders (oid, mid, orderdate)
+values(1000, 'sim9', sysdate);
+
+commit;
+~~~
+
+**--0건 조회**
+
+~~~
+select * from members where id = 'sim9';
+~~~
+<br><br>
+
+**--remark 컬럼에 주목**
+
+~~~
+select * from boards where writer is null;
+~~~
+
+**--remark 컬럼에 주목**
+
+~~~
+select * from orders where mid is null;
+~~~
+
+
+## 2021년 05월 06일 작업 내용<br><br>
+
+##### 상품 삭제하기<br><br>
+
+**JSP에서 설계**<br>
+관리자만이 삭제 가능하게 만들 것 이에요.(prList.jsp)<br><br>
+
+**Dao에서 설계**<br>
+주문 상세 테이블의 remark 컬럼이 수정되어야 하는 것이에요.(Dao.DeletaDate(int num))<br>
+해당 상품을 삭제되도록 만들 것이에요.<br><br>
+
+**테이블 설계**<br>
+매출 기록은 보존되어야 하므로, on delete set null이 설정되어야 하는 것이에요!<br><br><br>

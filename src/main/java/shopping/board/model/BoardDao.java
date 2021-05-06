@@ -76,6 +76,7 @@ public class BoardDao extends SuperDao {
 						sql += " values(myboard.nextval, ?, ? ,? , ?, myboard.currval) " ;
 
 		PreparedStatement pstmt = null ;
+		
 		int cnt = -1 ;
 		
 		try {

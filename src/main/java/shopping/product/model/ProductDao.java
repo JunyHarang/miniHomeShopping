@@ -85,21 +85,48 @@ public class ProductDao extends SuperDao {
 		}
 		return cnt ;
 	}
-	public int DeleteData( int pmkey ){
+	public int DeleteData( int num ){
 		String sql = " " ;
-		sql += "  " ;
-		sql += "  " ;
-
 		
 		PreparedStatement pstmt = null ;
-		int cnt = -99999 ;
+		
+		int cnt = - 1 ;
+		
 		try {
-			if( conn == null ){ super.conn = super.getConnection() ; }
+			if( conn == null ){ 
+				super.conn = super.getConnection() ; 
+			}
+			
 			conn.setAutoCommit( false );
+			
+			// remark 컬럼 수정
+			sql = " update orderdetails set remark = ? where pnum = ? " ;
+			
 			pstmt = super.conn.prepareStatement(sql) ;
 			
+			Product bean = this.SelectDataByPk(num);
 			
-			cnt = pstmt.executeUpdate() ; 
+			String temp = " 상품 " + bean.getName() + "이(가) 삭제 되었습니다." ;
+			
+			// 치환 작업
+			pstmt.setString(1, temp);
+			pstmt.setInt(2, num);
+			
+			cnt = pstmt.executeUpdate() ;
+			
+			if ( pstmt != null ) {
+				pstmt.close();
+			}
+			
+			// 해당 상품 삭제
+			sql = " delete from products where num = ? " ;
+						
+			pstmt = super.conn.prepareStatement(sql) ;
+						
+			pstmt.setInt(1, num);
+			
+			cnt = pstmt.executeUpdate() ;
+						
 			conn.commit(); 
 		} catch (Exception e) {
 			SQLException err = (SQLException)e ;			

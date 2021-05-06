@@ -99,7 +99,7 @@
 								</c:if>
 								
 								<c:if test="${whologin == 1}">
-									<a href="<%=NoForm%>meDelete">회원 탈퇴</a>
+									<a href="<%=NoForm%>meDelete&id=${sessionScope.loginfo.id}">회원 탈퇴</a>
 								</c:if>
 								
 								<c:if test="${whologin == 2}">

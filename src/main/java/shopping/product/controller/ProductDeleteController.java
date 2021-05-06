@@ -11,18 +11,30 @@ import javax.servlet.http.HttpServletResponse;
 import shopping.common.controller.SuperClass;
 import shopping.product.model.Product;
 import shopping.product.model.ProductDao;
+import shopping.utility.FlowParameters;
 
 public class ProductDeleteController extends SuperClass {
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doGet(request, response);
 		
-		Product bean = null ;
+		int num = Integer.parseInt(request.getParameter("num")) ;
+		
+		FlowParameters parameters = new FlowParameters( request.getParameter("pageNumber"), request.getParameter("mode"), request.getParameter("keyword") );
+		
+		System.out.println( parameters.toString() );
+		
 		ProductDao dao = new ProductDao();
-		String data = dao.toString() ;
+		
+		int cnt = - 1;
+		
+		cnt = dao.DeleteData(num);
+
+		
+		Product bean = null ;
 		
 		String id = request.getParameter("id") ;
-		int no = Integer.parseInt(request.getParameter("no")) ;
+		
 		
 		List<Product> lists = new ArrayList<Product>() ;
 		

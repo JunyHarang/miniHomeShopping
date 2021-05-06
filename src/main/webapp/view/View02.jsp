@@ -28,9 +28,7 @@
 				<c:forEach var="bean" items="${requestScope.lists}">
 					<tr>
 						<td>${bean.name}</td>
-						<td>${bean.subject}</td>
-						<td>${bean.content}</td>
-						<td>${bean.regdate}</td>						
+						<td>${bean.cnt}</td>
 					</tr>
 				</c:forEach>				
 			</table>

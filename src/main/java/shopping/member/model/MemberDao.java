@@ -89,33 +89,84 @@ public class MemberDao extends SuperDao {
 		}
 		return cnt ;
 	}
-	public int DeleteData( String pmkey ){		
-		String sql = " " ; 
-		sql += " " ;
-		sql += " " ;	
-
-		
-		PreparedStatement pstmt = null ;
-		int cnt = -1 ;
+	
+	
+	public int DeleteData( String id ){		
+	String sql;
+	PreparedStatement pstmt = null;
+	Member bean = null;
+	int cnt = - 1;
+	
 		try {
-			if( conn == null ){ super.conn = super.getConnection() ; }
+			bean = this.SelectDataByPk(id);
+			
+			
+			if( conn == null ){ 
+				super.conn = super.getConnection();
+			}
+			
 			conn.setAutoCommit( false );
-			pstmt = super.conn.prepareStatement(sql) ;
-			pstmt.setString(1, pmkey);			
-			cnt = pstmt.executeUpdate() ; 
-			conn.commit(); 
+			
+			// 1단계 : 게시물 테이블 remark 컬럼 수정
+			sql = " update boards set remark = ? where writer = ? " ; 
+			pstmt = super.conn.prepareStatement(sql);
+			
+			String imsi = bean.getName() + " ( " + id + " ) 회원이 탈퇴 하였습니다.";
+			pstmt.setString(1, imsi);
+			pstmt.setString(2, id);
+			
+			cnt = pstmt.executeUpdate();
+			
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			
+			// 2단계 : 매출 테이블 remark 컬럼 수정
+			sql = " update orders set remark = ? where mid = ? " ; 
+			pstmt = super.conn.prepareStatement(sql);
+			
+			pstmt.setString(1, imsi);
+			pstmt.setString(2, id);
+			
+			cnt = pstmt.executeUpdate();
+			
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			
+			// 3단계 : 회원 테이블 행 삭제
+			sql = " delete from members where id = ? " ;
+			
+			pstmt = super.conn.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+
+			cnt = pstmt.executeUpdate();
+			
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			
+			conn.commit();
+			
 		} catch (Exception e) {
 			SQLException err = (SQLException)e ;			
 			cnt = - err.getErrorCode() ;			
 			e.printStackTrace();
+			
 			try {
 				conn.rollback(); 
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
+			
 		} finally{
+			
 			try {
-				if( pstmt != null ){ pstmt.close(); }
+				if( pstmt != null ){ 
+					pstmt.close(); 
+				}
+				
 				super.closeConnection(); 
 			} catch (Exception e2) {
 				e2.printStackTrace();
@@ -123,7 +174,6 @@ public class MemberDao extends SuperDao {
 		}
 		return cnt ;
 	}
-	
 	public List<Member> SelectDataList(int beginRow, int endRow) {
 		PreparedStatement pstmt = null ;
 		ResultSet rs = null ;

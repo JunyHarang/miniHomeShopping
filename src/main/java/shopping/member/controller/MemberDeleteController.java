@@ -17,19 +17,16 @@ public class MemberDeleteController extends SuperClass {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doGet(request, response);
 		
-		Member bean = null ;
-		MemberDao dao = new MemberDao();
-		String data = dao.toString() ;
-		
 		String id = request.getParameter("id") ;
-		int no = Integer.parseInt(request.getParameter("no")) ;
+		MemberDao dao = new MemberDao();
 		
-		List<Member> lists = new ArrayList<Member>() ;
+		int cnt = - 1;
+		cnt = dao.DeleteData(id);
 		
-		request.setAttribute("bean", bean);
+		super.session.invalidate();
 		
-		String gotopage = "/member/main.jsp" ;
-		super.GotoPage(gotopage);
+		new MemberLoginController().doGet(request, response);
+		
 	}	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

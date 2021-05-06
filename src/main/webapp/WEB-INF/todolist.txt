@@ -38,7 +38,7 @@ insert.com=shopping.comment.controller.CommentInsertController
 delete.com=shopping.comment.controller.CommentDeleteController
 # Join Section
 viewExam01=shopping.composite.controller.View01Controller
-#viewExam02=shopping.composite.controller.View02Controller
-#viewExam03=shopping.composite.controller.View03Controller
-#viewExam04=shopping.composite.controller.View04Controller
-#viewExam05=shopping.composite.controller.View05Controller
+viewExam02=shopping.composite.controller.View02Controller
+viewExam03=shopping.composite.controller.View03Controller
+viewExam04=shopping.composite.controller.View04Controller
+viewExam05=shopping.composite.controller.View05Controller

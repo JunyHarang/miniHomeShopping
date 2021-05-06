@@ -16,7 +16,7 @@
 <body>
 	<div class="container col-sm-offset-<%=myoffset%> col-sm-<%=mywidth%>">
 		<div class="panel panel-default panel-warning">
-			<div class="panel-heading"><h4>회원과 게시물 조인</h4></div>
+			<div class="panel-heading"><h4>회원 별 주문 건수</h4></div>
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
